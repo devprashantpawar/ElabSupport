@@ -2,7 +2,9 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json;
 using System;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -75,9 +77,9 @@ namespace ElabSupport.Controllers
 
         //
         // POST: /Account/Login
+
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]     
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
@@ -85,9 +87,18 @@ namespace ElabSupport.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            UserDAC uc = new UserDAC();
+            DataTable data = null;
+            data = uc.GetLogin(model.UserName, model.Password);
+            if (data != null && data.Rows.Count != 0)
+            {
+                string userid = data.Rows[0].Field<string>("UserId").ToString();
+                ExotelController ec = new ExotelController();
+                var Data = await ec.GetUserData(userid);
+                string jsonData = JsonConvert.SerializeObject(Data);
+                return RedirectToLocal(returnUrl); ;
+            }
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
