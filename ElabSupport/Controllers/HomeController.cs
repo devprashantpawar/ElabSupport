@@ -5,20 +5,12 @@ using System.Web.Mvc;
 
 namespace ElabSupport.Controllers
 {
-    
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            if (Session["UserID"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-           
+            return View();
         }
     }
 }
