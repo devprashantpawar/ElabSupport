@@ -14,7 +14,7 @@ using System.Web.Http;
 
 namespace ElabSupport.Controllers
 {
-    [Authorize]
+   
     public class MeController : ApiController
     {
         private ApplicationUserManager _userManager;
@@ -41,10 +41,10 @@ namespace ElabSupport.Controllers
         }
 
         // GET api/Me
-        public GetViewModel Get()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            return new GetViewModel() { Hometown = user.Hometown };
-        }
+        //public GetViewModel Get()
+        //{
+        //    var user = UserManager.FindById(User.Identity.GetUserId());
+        //    return new GetViewModel() { Hometown = user.Hometown };
+        //}
     }
 }

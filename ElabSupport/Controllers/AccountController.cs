@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace ElabSupport.Controllers
 {
-    [Authorize]
+   
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -93,25 +93,16 @@ namespace ElabSupport.Controllers
             if (data != null && data.Rows.Count != 0)
             {
                 string userid = data.Rows[0].Field<string>("UserId").ToString();
+                string UserName = data.Rows[0].Field<string>("Username").ToString();
                 ExotelController ec = new ExotelController();
                 var Data = await ec.GetUserData(userid);
                 string jsonData = JsonConvert.SerializeObject(Data);
-                return RedirectToLocal(returnUrl); ;
+                Session["UserID"] = userid;
+                Session["UserName"] = UserName;
+                return RedirectToAction("Index", "Home"); ;
             }
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
+            return View(model);
+
         }
 
         //
