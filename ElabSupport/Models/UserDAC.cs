@@ -175,6 +175,98 @@ namespace ElabSupport.Models
             }
             return dataTable;
         }
+        public int UploadExcelData(List<ExcelData> excelData)
+        {
+            int result = 0;
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var data in excelData)
+                        {
+                            foreach (var OOSPerson in data.SupportPersons)
+                            {
+                                
+                                    using (SqlCommand command = new SqlCommand("OOSExcelUpload", connection, transaction))
+                                    {
+                                        command.CommandType = CommandType.StoredProcedure;
+
+                                        // Assuming your stored procedure parameters are named @ScheduleDate and @OOSPerson
+                                        command.Parameters.AddWithValue("@ScheduleDate", data.Date);
+                                        command.Parameters.AddWithValue("@OOSPerson", OOSPerson!=null?OOSPerson:"");
+
+                                        // ExecuteNonQuery returns the number of rows affected, which may not be needed
+                                        // If you need to capture the InsertedId, you can use ExecuteScalar instead
+                                        // Note: Make sure to cast the result appropriately (e.g., int)
+                                        result += Convert.ToInt32(command.ExecuteScalar());
+                                    }
+                                
+                            }
+                        }
+
+                        // If everything is successful, commit the transaction
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions and log the error
+                        transaction.Rollback();
+                        // You might also want to throw the exception or log it for further investigation
+                        throw;
+                    }
+                }
+            }
+
+            return result;
+        }
+        public List<SupportData> GetSupportData()
+        {
+            List<SupportData> result = new List<SupportData>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("GetSupportPersonsByDate", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            SupportData supportPersonsByDate = new SupportData
+                            {
+                                Date = (DateTime)reader["ScheduleDate"],
+                                Support1 = reader["Support1"] != DBNull.Value ? reader["Support1"].ToString() : null,
+                                Support2 = reader["Support2"] != DBNull.Value ? reader["Support2"].ToString() : null,
+                                Support3 = reader["Support3"] != DBNull.Value ? reader["Support3"].ToString() : null,
+                                ONCALLSUPPORTPERSON = reader["ONCALLSUPPORTPERSON"] != DBNull.Value ? reader["ONCALLSUPPORTPERSON"].ToString() : null,
+                                Support4 = reader["Support4"] != DBNull.Value ? reader["Support4"].ToString() : null,
+                                Support5 = reader["Support5"] != DBNull.Value ? reader["Support5"].ToString() : null,
+                                Support6 = reader["Support6"] != DBNull.Value ? reader["Support6"].ToString() : null,
+                                Support7 = reader["Support7"] != DBNull.Value ? reader["Support7"].ToString() : null,
+                                Support8 = reader["Support8"] != DBNull.Value ? reader["Support8"].ToString() : null,
+                                Support9 = reader["Support9"] != DBNull.Value ? reader["Support9"].ToString() : null,
+                                Support10 = reader["Support10"] != DBNull.Value ? reader["Support10"].ToString() : null,
+                                Support11 = reader["Support11"] != DBNull.Value ? reader["Support11"].ToString() : null,
+                                Support12 = reader["Support12"] != DBNull.Value ? reader["Support12"].ToString() : null,
+                                MACHINEINTERFACESUPPORT = reader["MACHINEINTERFACESUPPORT"] != DBNull.Value ? reader["MACHINEINTERFACESUPPORT"].ToString() : null,
+                            };
+
+                            result.Add(supportPersonsByDate);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+        public SupportData
     }
 }

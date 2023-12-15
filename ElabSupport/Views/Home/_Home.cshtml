@@ -1,4 +1,6 @@
-﻿@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+﻿@model List<ElabSupport.Models.SupportData>
+
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
     <table>
@@ -14,4 +16,59 @@
             </td>
         </tr>
     </table>
-}  
+}
+
+<h2>Support Persons</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Support1</th>
+            <th>Support2</th>
+            <th>Support3</th>
+            <th>ONCALLSUPPORTPERSON</th>
+            <th>Support4</th>
+            <th>Support5</th>
+            <th>Support6</th>
+            <th>Support7</th>
+            <th>Support8</th>
+            <th>Support9</th>
+            <th>Support10</th>
+            <th>Support11</th>
+            <th>Support12</th>
+            <th>MACHINEINTERFACESUPPORT</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@item.Support1</td>
+                    <td>@item.Support2</td>
+                    <td>@item.Support3</td>
+                    <td>@item.ONCALLSUPPORTPERSON</td>
+                    <td>@item.Support4</td>
+                    <td>@item.Support5</td>
+                    <td>@item.Support6</td>
+                    <td>@item.Support7</td>
+                    <td>@item.Support8</td>
+                    <td>@item.Support9</td>
+                    <td>@item.Support10</td>
+                    <td>@item.Support11</td>
+                    <td>@item.Support12</td>
+                    <td>@item.MACHINEINTERFACESUPPORT</td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <p>No data available</p>
+        }
+    </tbody>
+</table>

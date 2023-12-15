@@ -40,6 +40,18 @@ namespace ElabSupport.Controllers
             }
 
         }
+        
+        [System.Web.Http.HttpGet]
+        public async Task<ActionResult> GetSupportData(string UserName)
+        {
+            UserDAC uc = new UserDAC();
+            List<SupportData> data = uc.GetSupportData();
+            
+                var Data = await ec.GetUserData(userid);
+                string jsonData = JsonConvert.SerializeObject(Data);
+                jsonData = jsonData.Replace("\\", "");
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
 
     }
 
