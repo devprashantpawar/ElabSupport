@@ -405,7 +405,8 @@ namespace ElabSupport.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Clear();
+            Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
 
