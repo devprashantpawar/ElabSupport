@@ -23,8 +23,9 @@ namespace ElabSupport.Models
         public string ONCALLSUPPORTPERSON { get;  set; }
         public string MACHINEINTERFACESUPPORT { get;  set; }
     }
-    public class UserSchedule
+    public class UserSupportData
     {
-    
+        public DateTime Date { get; set; }
+        public string OOSPerson { get; set; }
     }
 }

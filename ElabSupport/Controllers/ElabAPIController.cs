@@ -42,17 +42,23 @@ namespace ElabSupport.Controllers
         }
         
         [System.Web.Http.HttpGet]
-        public async Task<ActionResult> GetSupportData(string UserName)
+        public ActionResult GetUserSupportData(string UserName)
         {
             UserDAC uc = new UserDAC();
-            List<SupportData> data = uc.GetSupportData();
-            
-                var Data = await ec.GetUserData(userid);
-                string jsonData = JsonConvert.SerializeObject(Data);
+            DataTable data = null;
+            string jsonData = "";
+            data = uc.GetUserSupportData();
+            if (data!=null && data.Rows.Count > 0)
+            {
+                // Convert DataTable to JSON using Newtonsoft.Json
+                jsonData = JsonConvert.SerializeObject(data);
                 jsonData = jsonData.Replace("\\", "");
+                // Return JSON response
                 return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { Message = "No data available" }, JsonRequestBehavior.AllowGet);
         }
+    }
 
     }
 
-}

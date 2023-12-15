@@ -267,6 +267,43 @@ namespace ElabSupport.Models
 
             return result;
         }
-        public SupportData
+        public DataTable GetUserSupportData()
+        {
+            DataTable result = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("GetUserSupportData", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        // Create columns in the DataTable based on the SqlDataReader schema
+                        result.Load(reader);
+
+                        // If you need to handle DBNull values, you can use the following loop
+                        foreach (DataColumn column in result.Columns)
+                        {
+                            if (column.DataType == typeof(string))
+                            {
+                                foreach (DataRow row in result.Rows)
+                                {
+                                    if (row.IsNull(column))
+                                    {
+                                        row[column] = string.Empty;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
     }
 }
