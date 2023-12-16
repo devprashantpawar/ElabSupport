@@ -1,74 +1,125 @@
 ﻿@model List<ElabSupport.Models.SupportData>
 
-@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+<div class="container mt-4">
+    <h2>Support Persons</h2>
 
-    <table>
-        <tr>
-            <td>File:</td>
-            <td>
-                <input type="file" name="UploadedFile" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" name="Submit" value="Submit" />
-            </td>
-        </tr>
-    </table>
-}
+    <div class="row mb-3">
+        <div class="col">
+            <!-- Replace the checkbox with a toggle button -->
+            <input type="checkbox" id="toggleSwitch" data-toggle="toggle">
+        </div>
+        <div class="col">
+            <input type="file" name="UploadedFile" class="form-control" />
+        </div>
+        <div class="col">
+            <input type="submit" name="Submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
 
-<h2>Support Persons</h2>
-
-<table border="1">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Support1</th>
-            <th>Support2</th>
-            <th>Support3</th>
-            <th>ONCALLSUPPORTPERSON</th>
-            <th>Support4</th>
-            <th>Support5</th>
-            <th>Support6</th>
-            <th>Support7</th>
-            <th>Support8</th>
-            <th>Support9</th>
-            <th>Support10</th>
-            <th>Support11</th>
-            <th>Support12</th>
-            <th>MACHINEINTERFACESUPPORT</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null)
-        {
-            foreach (var item in Model)
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Support1</th>
+                <th>Support2</th>
+                <th>Support3</th>
+                <th>ONCALLSUPPORTPERSON</th>
+                <th>Support4</th>
+                <th>Support5</th>
+                <th>Support6</th>
+                <th>Support7</th>
+                <th>Support8</th>
+                <th>Support9</th>
+                <th>Support10</th>
+                <th>Support11</th>
+                <th>Support12</th>
+                <th>MACHINEINTERFACESUPPORT</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Support1</td>
+                        <td>@item.Support2</td>
+                        <td>@item.Support3</td>
+                        <td>@item.ONCALLSUPPORTPERSON</td>
+                        <td>@item.Support4</td>
+                        <td>@item.Support5</td>
+                        <td>@item.Support6</td>
+                        <td>@item.Support7</td>
+                        <td>@item.Support8</td>
+                        <td>@item.Support9</td>
+                        <td>@item.Support10</td>
+                        <td>@item.Support11</td>
+                        <td>@item.Support12</td>
+                        <td>@item.MACHINEINTERFACESUPPORT</td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@item.Date.ToString("yyyy-MM-dd")</td>
-                    <td>@item.Support1</td>
-                    <td>@item.Support2</td>
-                    <td>@item.Support3</td>
-                    <td>@item.ONCALLSUPPORTPERSON</td>
-                    <td>@item.Support4</td>
-                    <td>@item.Support5</td>
-                    <td>@item.Support6</td>
-                    <td>@item.Support7</td>
-                    <td>@item.Support8</td>
-                    <td>@item.Support9</td>
-                    <td>@item.Support10</td>
-                    <td>@item.Support11</td>
-                    <td>@item.Support12</td>
-                    <td>@item.MACHINEINTERFACESUPPORT</td>
-
+                    <td colspan="15">No data available</td>
                 </tr>
             }
-        }
-        else
-        {
-            <p>No data available</p>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
+
+<!-- Include Bootstrap Toggle JS and CSS -->
+<!--<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>-->
+<!-- Include jQuery -->
+<!--<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
+<!-- Include Bootstrap Toggle JS and CSS -->
+<!--<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>-->
+<!-- Your existing HTML code -->
+<!-- Include jQuery from CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize Bootstrap Toggle
+       // $('#toggleSwitch').bootstrapToggle();
+
+        // Add an event listener for the toggle event
+        $('#toggleSwitch').change(function () {
+            // Get the current state of the toggle switch (true for ON, false for OFF)
+            var isChecked = $(this).prop('checked');
+            console.log('Status', isChecked);
+            // Replace these values with your actual user_id and device_id
+            var user_id = "fa1d03deee38403c96917513a7affaf8";
+            var device_id = "490038";
+
+            // Replace 'your_username' and 'your_password' with your actual API username and password
+            var username = 'f60730bf842e84322beaa8e29343ba4261dcb3cff518e0af';
+            var password = '6dd8ad80b30219045b204def703bb68602aa9bac0cf9ce09';
+
+            // Make an AJAX request to your API
+            $.ajax({
+                url: 'https://ccm-api.exotel.in/v2/accounts/bluepearlhealthtech2/users/' + user_id + '/devices/' + device_id,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({ available: isChecked }),
+                beforeSend: function (xhr) {
+                    // Add basic authentication header
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+                },
+                success: function (data) {
+                    // Handle success response from the API
+                    console.log('API request successful:', data);
+                },
+                error: function (error) {
+                    // Handle error response from the API
+                    console.error('API request failed:', error);
+                }
+            });
+        });
+
+    });
+</script>
