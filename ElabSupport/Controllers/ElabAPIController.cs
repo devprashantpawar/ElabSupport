@@ -58,7 +58,22 @@ namespace ElabSupport.Controllers
             }
             return Json(new { Message = "No data available" }, JsonRequestBehavior.AllowGet);
         }
-    }
+
+        [System.Web.Http.HttpPut]
+        public async Task<ActionResult> UpdateUserStatus([FromBody] UpdateStatusRequest model)
+        {
+            model.DeviceId = "490038";
+            model.UserId = "fa1d03deee38403c96917513a7affaf8";
+            model.Status = true;
+            ExotelController ec = new ExotelController();
+            var Data = await ec.UpdateDeviceAvailability(model.UserId, model.Status, model.DeviceId);
+            string jsonData = JsonConvert.SerializeObject(Data);
+            jsonData = jsonData.Replace("\\", "");
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
 
     }
+
+}
 

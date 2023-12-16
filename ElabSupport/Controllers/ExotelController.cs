@@ -1,10 +1,13 @@
-﻿using System;
+﻿using ElabSupport.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace ElabSupport.Controllers
@@ -18,7 +21,7 @@ namespace ElabSupport.Controllers
             return View();
         }
 
-        public async Task<string> GetExotelData()
+        public async Task<string> GetExotelUserData()
         {
             try
             {
@@ -51,49 +54,49 @@ namespace ElabSupport.Controllers
                 return ex.Message;
             }
         }
-        public async Task<string> UpdateDeviceAvailability(string userId, bool available)
+        [System.Web.Http.HttpPut]
+        public async Task<ActionResult> UpdateDeviceAvailability(string userId, bool available, string deviceId)
         {
             try
             {
-                string deviceId = "490038";
                 string ExotelApiUrlBase = "https://ccm-api.exotel.in/v2/accounts/bluepearlhealthtech2/users/";
                 string apiUrl = $"{ExotelApiUrlBase}{userId}/devices/{deviceId}";
-                DeviceAvailabilityRequest request = new DeviceAvailabilityRequest
-                {
-                    available = false
-                };
+
+                // Create a JSON string representing the request body
+                string jsonRequest = JsonConvert.SerializeObject(new { available });
+
                 using (HttpClient client = new HttpClient())
                 {
                     // Set up Basic Authentication
                     string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{Username}:{Password}"));
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", credentials);
 
-                    // Convert the request object to JSON
-                    string jsonRequest = Newtonsoft.Json.JsonConvert.SerializeObject(request);
+                    // Convert the JSON string to content with the appropriate content type
                     StringContent content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
+                    // Send the request with the JSON content
                     HttpResponseMessage response = await client.PutAsync(apiUrl, content);
 
                     // Check if the request was successful
                     if (response.IsSuccessStatusCode)
                     {
                         string responseData = await response.Content.ReadAsStringAsync();
-                        return responseData;
+                        return Content(responseData, "application/json");
                     }
                     else
                     {
                         // Return an error status code along with the reason
-                        return response.StatusCode.ToString();
+                        return Content(response.StatusCode.ToString(), "text/plain");
                     }
                 }
             }
             catch (Exception ex)
             {
                 // Return a 500 Internal Server Error with the exception message
-                return ex.Message;
+                return Content(ex.Message, "text/plain");
             }
-
         }
+
         public class DeviceAvailabilityRequest
         {
             public bool available { get; set; }
