@@ -26,10 +26,13 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("DashBoard", "Index", "Home", new { area = "" }, null)</li>
+                    @if (Session["UserRoleId"] as string == "1")
+                    {
                     <li>@Html.ActionLink("UserData", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("AddUser", "AddUser", "ManageUser", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("UserRole", "Index", "ManageUser", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Account", "Index", "Home", new { area = "" }, null)</li>
+                    }
                     <li>@Html.ActionLink("About", "Index", "Home", new { area = "" }, null)</li>
                 </ul>
                 }

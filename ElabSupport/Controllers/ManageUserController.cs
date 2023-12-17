@@ -137,15 +137,15 @@ namespace ElabSupport.Controllers
                 {
                     UserDAC dc = new UserDAC();
                     int newuserId = dc.AddUser(newUser);
-                    if (newuserId > 0)
+                    if (newuserId == 1)
                     {
-                        TempData["ErrorMessage"] = "User Update!...";
+                        TempData["ErrorMessage"] = "User Added!...";
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "New User Added!...";
+                        TempData["ErrorMessage"] = "New User Updated!...";
                     }
-                    return RedirectToAction("Index");
+                    return RedirectToAction("AddUser");
                 }
                 catch (Exception ex)
                 {

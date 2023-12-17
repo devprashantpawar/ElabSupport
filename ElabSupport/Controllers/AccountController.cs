@@ -94,11 +94,13 @@ namespace ElabSupport.Controllers
             {
                 string userid = data.Rows[0].Field<string>("UserId").ToString();
                 string UserName = data.Rows[0].Field<string>("Username").ToString();
+                int UserRoleId = Convert.ToInt32(data.Rows[0].Field<int>("UserRoleId"));
                 ExotelController ec = new ExotelController();
                 var Data = await ec.GetUserData(userid);
                 string jsonData = JsonConvert.SerializeObject(Data);
                 Session["UserID"] = userid;
                 Session["UserName"] = UserName;
+                Session["UserRoleId"] = UserRoleId.ToString();
                 return RedirectToAction("Index", "Home"); ;
             }
             return View(model);

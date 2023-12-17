@@ -48,7 +48,10 @@
 
         <div class="col-md-6">
             <!-- ... other form fields ... -->
-
+            <div class="form-group">
+                @Html.LabelFor(model => model.DeviceId)
+                @Html.TextBoxFor(model => model.DeviceId, new { @class = "form-control" })
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Rates)
                 @Html.TextBoxFor(model => model.Rates, new { @class = "form-control" })
@@ -98,7 +101,8 @@
             $("#EmailId").val("");
             $("#MobileNumber").val("");
             $("#Address").val("");
-            // Add similar lines for other form fields
+            $("#DeviceId").val("");
+         // Add similar lines for other form fields
 
             // Optionally, you can also reset dropdowns to their default values
             $("#RateType").val("1"); // Assuming "1" is the default value
