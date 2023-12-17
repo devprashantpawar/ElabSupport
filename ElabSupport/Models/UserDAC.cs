@@ -100,7 +100,6 @@ namespace ElabSupport.Models
         }
         public int AddUserRole(UseRoleModel newUserRole)
         {
-            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -109,18 +108,35 @@ namespace ElabSupport.Models
                 {
                     try
                     {
+                        string insertQuery = "";
                         // Assuming "UserRoles" is the name of your database table
-                        string insertQuery = @"INSERT INTO UserRole (UserRole, UserRoleDescription, Rates,Active)
-                                           VALUES (@UserRole, @UserRoleDescription, @Rates,1);
-                                           SELECT SCOPE_IDENTITY();"; // Assuming UserRoleId is an identity column
+                        if (newUserRole.UserRoleId == 0)
+                        {
+                            insertQuery = @"INSERT INTO UserRole (UserRole, UserRoleDescription, Rates, Active)
+                                   VALUES (@UserRole, @UserRoleDescription, @Rates, 1);
+                                   SELECT SCOPE_IDENTITY();"; // Assuming UserRoleId is an identity column
+                        }
+                        else
+                        {
+                            insertQuery = @"UPDATE UserRole 
+                                    SET UserRole = @UserRole,
+                                        UserRoleDescription = @UserRoleDescription,
+                                        Rates = @Rates
+                                    WHERE UserRoleId = @userroleid;
+                                    SELECT @@ROWCOUNT;";
+                        }
 
                         using (SqlCommand command = new SqlCommand(insertQuery, connection, transaction))
                         {
                             command.Parameters.AddWithValue("@UserRole", newUserRole.UserRole);
                             command.Parameters.AddWithValue("@UserRoleDescription", newUserRole.UserRoleDescription);
                             command.Parameters.AddWithValue("@Rates", newUserRole.Rates ?? (object)DBNull.Value);
+                            if (newUserRole.UserRoleId > 0)
+                            {
+                                command.Parameters.AddWithValue("@userroleid", newUserRole.UserRoleId);
+                            }
 
-                            // Execute the insert query and get the newly created UserRoleId
+                            // Execute the query and get the number of rows affected
                             newUserRole.UserRoleId = Convert.ToInt32(command.ExecuteScalar());
                         }
 
@@ -137,6 +153,7 @@ namespace ElabSupport.Models
                 }
             }
         }
+
         public UseRoleModel UpdateUserRole(UseRoleModel newUserRole)
         {
             

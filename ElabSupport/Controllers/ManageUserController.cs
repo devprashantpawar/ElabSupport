@@ -66,19 +66,26 @@ namespace ElabSupport.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public ActionResult AddUserRole(string userRole, string userRoleDescription, string rates)
+        public ActionResult AddUserRole(string userRole, string userRoleDescription, string rates, int userRoleId=0)
         {
             try
             {
                 UseRoleModel userRole1 = new UseRoleModel();
+                userRole1.UserRoleId = userRoleId;
                 userRole1.UserRole = userRole;
                 userRole1.UserRoleDescription = userRoleDescription;
                 userRole1.Rates = Convert.ToDecimal(rates);
                 // Perform logic to add the new user role to your data source (e.g., database)
                 UserDAC dc = new UserDAC();
                 int newRoleId = dc.AddUserRole(userRole1);
-                TempData["ErrorMessage"] = "New UserRole Added!...";
-
+                if (userRoleId > 0)
+                {
+                    TempData["ErrorMessage"] = "UserRole Update!...";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "New UserRole Added!...";
+                }
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
