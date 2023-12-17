@@ -21,12 +21,19 @@
                 @Html.ActionLink("Elab Support", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
+                @if (!string.IsNullOrEmpty(Session["UserId"] as string))
+                {
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                   
+                    <li>@Html.ActionLink("DashBoard", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("UserData", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("UserRole", "Index", "ManageUser", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Account", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("About", "Index", "Home", new { area = "" }, null)</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+                }
+                    @Html.Partial("_LoginPartial")
+                </div>
         </div>
     </div>
     <div class="container body-content">

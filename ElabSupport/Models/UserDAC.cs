@@ -19,11 +19,11 @@ namespace ElabSupport.Models
             var querry = "";
             if (UserRoleId > 0)
             {
-                querry = "SELECT * FROM UserRole where UserRoleId = @userroleid";
+                querry = "SELECT * FROM UserRole where Active = 1 AND UserRoleId = @userroleid";
             }
             else
             {
-                querry = "SELECT * FROM UserRole";
+                querry = "SELECT * FROM UserRole where Active = 1";
             }
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -42,6 +42,33 @@ namespace ElabSupport.Models
             }
             return dataTable;
         }
+        public bool DeleteUserRole(int UserRoleId)
+        {
+            bool deactivated = false;
+            var query = "UPDATE UserRole SET Active = 0 WHERE UserRoleId = @userroleid";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@userroleid", UserRoleId);
+
+                    // Execute the query
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // Check if any rows were affected
+                    if (rowsAffected > 0)
+                    {
+                        // Deactivation successful
+                        deactivated = true;
+                    }
+                }
+            }
+
+            return deactivated;
+        }
+
         public DataTable GetUsers(Guid UserId)
         {
             var dataTable = new DataTable();
@@ -71,7 +98,7 @@ namespace ElabSupport.Models
             }
             return dataTable;
         }
-        public UseRoleModel AddUserRole(UseRoleModel newUserRole)
+        public int AddUserRole(UseRoleModel newUserRole)
         {
             
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -83,8 +110,8 @@ namespace ElabSupport.Models
                     try
                     {
                         // Assuming "UserRoles" is the name of your database table
-                        string insertQuery = @"INSERT INTO UserRole (UserRole, UserRoleDescription, Rates)
-                                           VALUES (@UserRole, @UserRoleDescription, @Rates);
+                        string insertQuery = @"INSERT INTO UserRole (UserRole, UserRoleDescription, Rates,Active)
+                                           VALUES (@UserRole, @UserRoleDescription, @Rates,1);
                                            SELECT SCOPE_IDENTITY();"; // Assuming UserRoleId is an identity column
 
                         using (SqlCommand command = new SqlCommand(insertQuery, connection, transaction))
@@ -99,7 +126,7 @@ namespace ElabSupport.Models
 
                         // Commit the transaction
                         transaction.Commit();
-                        return newUserRole;
+                        return newUserRole.UserRoleId;
                     }
                     catch (Exception ex)
                     {

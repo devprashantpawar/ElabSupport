@@ -1,0 +1,73 @@
+﻿@model List<ElabSupport.Models.UseRoleModel>
+
+@{
+    ViewBag.Title = "User Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <script>
+        alert('@Html.Raw(errorMessage)');
+    </script>
+}
+
+<h2>User Roles</h2>
+<form method="post" action="@Url.Action("AddUserRole", "ManageUser")">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <!-- Add User Role Textbox -->
+            <input type="text" id="userRoleInput" name="userRole" class="form-control" placeholder="User Role">
+        </div>
+        <div class="col-md-4">
+            <!-- Add User Role Description Textbox -->
+            <input type="text" id="userRoleDescriptionInput" name="userRoleDescription" class="form-control" placeholder="User Role Description">
+        </div>
+        <div class="col-md-3">
+            <!-- Add Rates Textbox -->
+            <input type="text" id="ratesInput" name="rates" class="form-control" placeholder="Rates">
+        </div>
+        <div class="col-md-1">
+            <!-- Add Button to Add User Role -->
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Role ID</th>
+            <th>User Role Name</th>
+            <th>User Role Description</th>
+            <th>Rates</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.UserRoleId</td>
+                <td>@role.UserRole</td>
+                <td>@role.UserRoleDescription</td>
+                <td>@role.Rates</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = role.UserRoleId }, new { @class = "btn btn-primary btn-sm" })
+
+                    <!-- Confirm deletion with an alert -->
+                    @Html.ActionLink("Delete", "Delete", new { id = role.UserRoleId }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Are you sure you want to delete this user role?');" })
+                    <!-- Add ActionLink for Delete if needed -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- Include jQuery from a CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
