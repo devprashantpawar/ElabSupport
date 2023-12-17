@@ -119,13 +119,13 @@ namespace ElabSupport.Controllers
                             Rates = row["Rates"] != DBNull.Value ? Convert.ToDecimal(row["Rates"]) : 0
                         });
                     }
-                    return View(userRoles);
+                    return View();
                 }
                 return View();
             }
             else
             {
-                return View();
+                return RedirectToAction("Login", "Account");
             }
         }
         [HttpPost]

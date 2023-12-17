@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
 <h2>Add User</h2>
 
 @using (Html.BeginForm("AddUser", "ManageUser", FormMethod.Post, new { @class = "form" }))
@@ -14,21 +17,25 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Username)
                 @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Username)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Password)
                 @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.EmailId)
                 @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EmailId)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.MobileNumber)
                 @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MobileNumber)
             </div>
 
             <div class="form-group">
@@ -37,15 +44,15 @@
             </div>
         </div>
 
+        <!-- ... other form fields ... -->
+
         <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(model => model.DeviceId)
-                @Html.TextBoxFor(model => model.DeviceId, new { @class = "form-control" })
-            </div>
+            <!-- ... other form fields ... -->
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Rates)
                 @Html.TextBoxFor(model => model.Rates, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Rates)
             </div>
 
             <div class="form-group">
@@ -58,6 +65,7 @@
                     }, "Value", "Text"),
                     "Select an option",
                     new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RateType)
             </div>
 
             <div class="form-group">
@@ -71,6 +79,7 @@
                     }, "Value", "Text"),
                     "Select an option",
                     new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserRoleId)
             </div>
 
             <!-- Add other form fields as needed -->
@@ -78,4 +87,22 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Add User</button>
+    <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+  
 }
+<script>
+     function clearForm() {
+            // Clear individual form fields by setting their values to empty strings
+            $("#Username").val("");
+            $("#Password").val("");
+            $("#EmailId").val("");
+            $("#MobileNumber").val("");
+            $("#Address").val("");
+            // Add similar lines for other form fields
+
+            // Optionally, you can also reset dropdowns to their default values
+            $("#RateType").val("1"); // Assuming "1" is the default value
+            $("#UserRoleId").val("1"); // Assuming "1" is the default value
+        
+    }
+</script>
