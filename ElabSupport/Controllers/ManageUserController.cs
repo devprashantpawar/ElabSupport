@@ -94,5 +94,69 @@ namespace ElabSupport.Controllers
                 return View();
             }
         }
+
+        public ActionResult AddUser()
+        {
+            // Your logic for the AddUser action goes here
+            // You can return a view or perform any other action
+            if (Session["UserID"] != null)
+            {
+                UserDAC dc = new UserDAC();
+                DataTable dt = null;
+                dt = dc.GetUserRoles(0);
+                // Check if DataTable is not null and has rows
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    // Convert DataTable to a list of UserRoles
+                    List<UseRoleModel> userRoles = new List<UseRoleModel>();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        userRoles.Add(new UseRoleModel
+                        {
+                            UserRoleId = row["UserRoleId"] != DBNull.Value ? Convert.ToInt32(row["UserRoleId"]) : 0,
+                            UserRole = row["UserRole"] != DBNull.Value ? row["UserRole"].ToString() : string.Empty,
+                            UserRoleDescription = row["UserRoleDescription"] != DBNull.Value ? row["UserRoleDescription"].ToString() : string.Empty,
+                            Rates = row["Rates"] != DBNull.Value ? Convert.ToDecimal(row["Rates"]) : 0
+                        });
+                    }
+                    return View(userRoles);
+                }
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult AddUser(UserModel newUser)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserDAC dc = new UserDAC();
+                    int newuserId = dc.AddUser(newUser);
+                    if (newuserId > 0)
+                    {
+                        TempData["ErrorMessage"] = "User Update!...";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "New User Added!...";
+                    }
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions and return an error message
+                    return View();
+                }
+                return RedirectToAction("AddUser");
+            }
+
+            // If the model is not valid, return to the same view with validation errors
+            return View(newUser);
+        }
     }
 }

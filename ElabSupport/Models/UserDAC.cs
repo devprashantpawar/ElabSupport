@@ -68,7 +68,6 @@ namespace ElabSupport.Models
 
             return deactivated;
         }
-
         public DataTable GetUsers(Guid UserId)
         {
             var dataTable = new DataTable();
@@ -153,10 +152,8 @@ namespace ElabSupport.Models
                 }
             }
         }
-
-        public UseRoleModel UpdateUserRole(UseRoleModel newUserRole)
+        public int AddUser(UserModel newUser)
         {
-            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -165,38 +162,77 @@ namespace ElabSupport.Models
                 {
                     try
                     {
-                        // Assuming "UserRoles" is the name of your database table
-                        string updateQuery = @"
-                    UPDATE UserRole
-                    SET UserRole = @UserRole,
-                        UserRoleDescription = @UserRoleDescription,
-                        Rates = @Rates
-                    WHERE UserRoleId = @UserRoleId";
-
-                        using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
+                        int result = 0;
+                        string insertQuery = "";
+                        // Assuming "User" is the name of your database table
+                        if (!string.IsNullOrEmpty(newUser.UserId))
                         {
-                            command.Parameters.AddWithValue("@UserRoleId", newUserRole.UserRoleId);
-                            command.Parameters.AddWithValue("@UserRole", newUserRole.UserRole);
-                            command.Parameters.AddWithValue("@UserRoleDescription", newUserRole.UserRoleDescription);
-                            command.Parameters.AddWithValue("@Rates", newUserRole.Rates ?? (object)DBNull.Value);
+                            insertQuery = @"UPDATE [Users] 
+                                    SET Username = @Username,
+                                        Password = @Password,
+                                        DeviceId = @DeviceId,
+                                        UserRoleId = @UserRoleId,
+                                        RateType = @RateType,
+                                        Rates = @Rates,
+                                        Active = @Active,
+                                        EmailId = @EmailId,
+                                        MobileNumber = @MobileNumber,
+                                        Address = @Address
+                                    WHERE UserId = @UserId;
+                                    SELECT @@ROWCOUNT;";
+                        }
+                        else
+                        {
+                            insertQuery = @"INSERT INTO [Users] (UserId,Username, Password, DeviceId, UserRoleId, RateType, Rates, Active, EmailId, MobileNumber, Address)
+                                   VALUES (@UserId,@Username, @Password, @DeviceId, @UserRoleId, @RateType, @Rates, @Active, @EmailId, @MobileNumber, @Address);
+                                   SELECT SCOPE_IDENTITY();"; // Assuming UserId is an identity column
+                        }
 
-                            // Execute the update query
+                        using (SqlCommand command = new SqlCommand(insertQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@Username", newUser.Username);
+                            command.Parameters.AddWithValue("@Password", newUser.Password);
+                            command.Parameters.AddWithValue("@DeviceId", newUser.DeviceId);
+                            command.Parameters.AddWithValue("@UserRoleId", newUser.UserRoleId);
+                            command.Parameters.AddWithValue("@RateType", newUser.RateType);
+                            command.Parameters.AddWithValue("@Rates", newUser.Rates ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@Active", 1);
+                            command.Parameters.AddWithValue("@EmailId", newUser.EmailId);
+                            command.Parameters.AddWithValue("@MobileNumber", newUser.MobileNumber);
+                            command.Parameters.AddWithValue("@Address", newUser.Address);
+                            if (newUser.UserId != null)
+                            {
+                                // If not null, add the UserId as a parameter
+                                command.Parameters.AddWithValue("@UserId", newUser.UserId);
+                            }
+                            else
+                            {
+                                // If null, generate a random number and add it with a string
+                                Random random = new Random();
+                                int randomNumber = random.Next(1000); // You can adjust the range as needed
+                                string randomUserId = "GeneratedUser_" + randomNumber;
+
+                                command.Parameters.AddWithValue("@UserId", randomUserId);
+                            }
                             command.ExecuteNonQuery();
+                            // Execute the query and get the number of rows affected
+                            result = 1;
                         }
 
                         // Commit the transaction
                         transaction.Commit();
-                        return newUserRole;
+                        return result;
                     }
                     catch (Exception ex)
                     {
                         // Rollback the transaction in case of an exception
                         transaction.Rollback();
-                        throw new Exception($"Failed to update user role. {ex.Message}");
+                        throw new Exception($"Failed to add/update user. {ex.Message}");
                     }
                 }
             }
         }
+
         public DataTable GetLogin(string UserName, string Password)
         {
             var dataTable = new DataTable();
