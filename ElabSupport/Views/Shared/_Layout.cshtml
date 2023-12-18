@@ -29,11 +29,11 @@
                     @if (Session["UserRoleId"] as string == "1")
                     {
                     <li>@Html.ActionLink("UserData", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("AddUser", "AddUser", "ManageUser", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("UserRole", "Index", "ManageUser", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("ManageUser", "AddUser", "ManageUser", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("ManageRole", "Index", "ManageUser", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Account", "Account", "ManageUser", new { area = "" }, null)</li>
                     }
-                    <li>@Html.ActionLink("About", "Index", "Home", new { area = "" }, null)</li>
+                    
                 </ul>
                 }
                     @Html.Partial("_LoginPartial")
