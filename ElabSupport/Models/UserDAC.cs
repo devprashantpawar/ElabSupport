@@ -181,14 +181,15 @@ namespace ElabSupport.Models
                                         Active = @Active,
                                         EmailId = @EmailId,
                                         MobileNumber = @MobileNumber,
-                                        Address = @Address
+                                        Address = @Address,
+                                        FirstName = @FirstName
                                     WHERE UserId = @UserId;
                                     SELECT @@ROWCOUNT;";
                         }
                         else
                         {
-                            insertQuery = @"INSERT INTO [Users] (UserId,Username, Password, DeviceId, UserRoleId, RateType, Rates, Active, EmailId, MobileNumber, Address)
-                                   VALUES (@UserId,@Username, @Password, @DeviceId, @UserRoleId, @RateType, @Rates, @Active, @EmailId, @MobileNumber, @Address);
+                            insertQuery = @"INSERT INTO [Users] (UserId,Username, Password, DeviceId, UserRoleId, RateType, Rates, Active, EmailId, MobileNumber, Address,FirstName)
+                                   VALUES (@UserId,@Username, @Password, @DeviceId, @UserRoleId, @RateType, @Rates, @Active, @EmailId, @MobileNumber, @Address,@FirstName);
                                    SELECT SCOPE_IDENTITY();"; // Assuming UserId is an identity column
                         }
 
@@ -196,6 +197,7 @@ namespace ElabSupport.Models
                         {
                             command.Parameters.AddWithValue("@Username", newUser.Username);
                             command.Parameters.AddWithValue("@Password", newUser.Password);
+                            command.Parameters.AddWithValue("@FirstName", newUser.FirstName);
                             command.Parameters.AddWithValue("@DeviceId", newUser.DeviceId);
                             command.Parameters.AddWithValue("@UserRoleId", newUser.UserRoleId);
                             command.Parameters.AddWithValue("@RateType", newUser.RateType);
@@ -381,6 +383,38 @@ namespace ElabSupport.Models
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+        public List<AccountSupportData> GetAccountSupportData()
+        {
+            List<AccountSupportData> result = new List<AccountSupportData>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SelectAccountData", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AccountSupportData AccountSupportData = new AccountSupportData
+                            {
+                                OOSPerson = reader["OOSPerson"] != DBNull.Value ? reader["OOSPerson"].ToString() : null,
+                                UserRole = reader["UserRole"] != DBNull.Value ? reader["UserRole"].ToString() : null,
+                                Days = reader["Days"] != DBNull.Value ? reader["Days"].ToString() : null,
+                                TotalAmount = reader["TotalAmount"] != DBNull.Value ? reader["TotalAmount"].ToString() : null
+                            };
+
+                            result.Add(AccountSupportData);
                         }
                     }
                 }

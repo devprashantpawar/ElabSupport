@@ -244,6 +244,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountSupportData.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ExcelData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -356,6 +357,7 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\ManageUser\Index.cshtml" />
     <Content Include="Views\ManageUser\AddUser.cshtml" />
+    <Content Include="Views\ManageUser\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

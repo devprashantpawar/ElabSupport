@@ -162,5 +162,23 @@ namespace ElabSupport.Controllers
             // If the model is not valid, return to the same view with validation errors
             return View(newUser);
         }
+
+        public ActionResult Account()
+        {
+            // Your logic for the AddUser action goes here
+            // You can return a view or perform any other action
+            if (Session["UserID"] != null)
+            {
+                UserDAC dc = new UserDAC();
+                List<AccountSupportData> AccountSupportData = dc.GetAccountSupportData();
+
+                return View(AccountSupportData);
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
     }
 }
