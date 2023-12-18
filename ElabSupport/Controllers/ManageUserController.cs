@@ -18,12 +18,12 @@ namespace ElabSupport.Controllers
             {
                 UserDAC dc = new UserDAC();
                 DataTable dt = null;
+                List<UseRoleModel> userRoles = new List<UseRoleModel>();
                 dt = dc.GetUserRoles(0);
                 // Check if DataTable is not null and has rows
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     // Convert DataTable to a list of UserRoles
-                    List<UseRoleModel> userRoles = new List<UseRoleModel>();
                     foreach (DataRow row in dt.Rows)
                     {
                         userRoles.Add(new UseRoleModel
@@ -36,13 +36,8 @@ namespace ElabSupport.Controllers
                             Shiftboth = row["Shiftboth"] != DBNull.Value ? Convert.ToInt32(row["Shiftboth"]) : 0
                         });
                     }
-
-                    return View(userRoles);
                 }
-                else
-                {
-                    return View();
-                }
+                return View(userRoles);
             }
             else
             {
@@ -105,28 +100,61 @@ namespace ElabSupport.Controllers
             // You can return a view or perform any other action
             if (Session["UserID"] != null)
             {
-                UserDAC dc = new UserDAC();
-                DataTable dt = null;
-                dt = dc.GetUserRoles(0);
-                // Check if DataTable is not null and has rows
-                if (dt != null && dt.Rows.Count > 0)
-                {
-                    // Convert DataTable to a list of UserRoles
+                    UserDAC dc = new UserDAC();
+                    DataTable dt = null;
+                    DataTable userdata = null;
+                    List<UserModel> usermodel = new List<UserModel>();
                     List<UseRoleModel> userRoles = new List<UseRoleModel>();
-                    foreach (DataRow row in dt.Rows)
+
+                    dt = dc.GetUserRoles(0);
+                    userdata = dc.GetUsers();
+                    // Check if DataTable is not null and has rows
+                    if (userdata != null && userdata.Rows.Count > 0)
                     {
-                        userRoles.Add(new UseRoleModel
+                        // Convert DataTable to a list of UserRoles
+                        foreach (DataRow row in userdata.Rows)
                         {
-                            UserRoleId = row["UserRoleId"] != DBNull.Value ? Convert.ToInt32(row["UserRoleId"]) : 0,
-                            UserRole = row["UserRole"] != DBNull.Value ? row["UserRole"].ToString() : string.Empty,
-                            UserRoleDescription = row["UserRoleDescription"] != DBNull.Value ? row["UserRoleDescription"].ToString() : string.Empty,
-                            Rates = row["Rates"] != DBNull.Value ? Convert.ToDecimal(row["Rates"]) : 0
-                        });
+                            usermodel.Add(new UserModel
+                            {
+                                UserId = row["UserId"] != DBNull.Value ? row["UserRoleId"].ToString() : string.Empty,
+                                Username = row["Username"] != DBNull.Value ? row["Username"].ToString() : string.Empty,
+                                FirstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : string.Empty,
+                                DeviceId = row["DeviceId"] != DBNull.Value ? row["DeviceId"].ToString() : string.Empty,
+                                Address = row["Address"] != DBNull.Value ? row["Address"].ToString() : string.Empty,
+                                MobileNumber = row["MobileNumber"] != DBNull.Value ? row["MobileNumber"].ToString() : string.Empty,
+                                EmailId = row["EmailId"] != DBNull.Value ? row["EmailId"].ToString() : string.Empty,
+                                Rates = row["Rates"] != DBNull.Value ? row["Rates"].ToString() : string.Empty,
+                                Active = row["Active"] != DBNull.Value ? Convert.ToBoolean(row["Active"]) : false,
+                                RateType = row["RateType"] != DBNull.Value ? Convert.ToInt32(row["RateType"]) : 0,
+                                UserRoleId = row["UserRoleId"] != DBNull.Value ? Convert.ToInt32(row["UserRoleId"]) : 0
+
+                            });
+                        }
                     }
-                    return View();
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        // Convert DataTable to a list of UserRoles
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            userRoles.Add(new UseRoleModel
+                            {
+                                UserRoleId = row["UserRoleId"] != DBNull.Value ? Convert.ToInt32(row["UserRoleId"]) : 0,
+                                UserRole = row["UserRole"] != DBNull.Value ? row["UserRole"].ToString() : string.Empty,
+                                UserRoleDescription = row["UserRoleDescription"] != DBNull.Value ? row["UserRoleDescription"].ToString() : string.Empty,
+                                Rates = row["Rates"] != DBNull.Value ? Convert.ToDecimal(row["Rates"]) : 0,
+                                Shift1 = row["Shift1"] != DBNull.Value ? Convert.ToInt32(row["Shift1"]) : 0,
+                                Shiftboth = row["Shiftboth"] != DBNull.Value ? Convert.ToInt32(row["Shiftboth"]) : 0
+                            });
+                        }
+                    }
+
+                    UserViewModel viewModel = new UserViewModel
+                    {
+                        UserList = usermodel,
+                        UserRoles = userRoles
+                    };
+                    return View(viewModel);
                 }
-                return View();
-            }
             else
             {
                 return RedirectToAction("Login", "Account");

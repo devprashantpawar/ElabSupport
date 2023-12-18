@@ -24,7 +24,7 @@ namespace ElabSupport.Models
         [RegularExpression("^[0-9]+$", ErrorMessage = "Rates should be a valid integer.")]
         public string Rates { get; set; }
 
-        public int Active { get; set; }
+        public bool Active { get; set; }
 
         [Required(ErrorMessage = "EmailId is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]

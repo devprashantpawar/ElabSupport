@@ -68,11 +68,11 @@ namespace ElabSupport.Models
 
             return deactivated;
         }
-        public DataTable GetUsers(Guid UserId)
+        public DataTable GetUsers(string UserId =null)
         {
             var dataTable = new DataTable();
             var querry = "";
-            if (UserId != null && UserId != Guid.Empty)
+            if (!string.IsNullOrEmpty(UserId))
             {
                 querry = "SELECT * FROM Users where Active =1 AND UserId = @UserId";
             }
@@ -85,7 +85,7 @@ namespace ElabSupport.Models
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(querry, connection))
                 {
-                    if (UserId != null && UserId != Guid.Empty)
+                    if (!string.IsNullOrEmpty(UserId))
                     {
                         command.Parameters.AddWithValue("@UserId", UserId);
                     }
