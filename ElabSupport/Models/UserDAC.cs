@@ -111,8 +111,8 @@ namespace ElabSupport.Models
                         // Assuming "UserRoles" is the name of your database table
                         if (newUserRole.UserRoleId == 0)
                         {
-                            insertQuery = @"INSERT INTO UserRole (UserRole, UserRoleDescription, Rates, Active)
-                                   VALUES (@UserRole, @UserRoleDescription, @Rates, 1);
+                            insertQuery = @"INSERT INTO UserRole (UserRole, UserRoleDescription, Rates, Active,Shift1,Shift2)
+                                   VALUES (@UserRole, @UserRoleDescription, @Rates, 1,@Shift1,@Shift2);
                                    SELECT SCOPE_IDENTITY();"; // Assuming UserRoleId is an identity column
                         }
                         else
@@ -120,7 +120,9 @@ namespace ElabSupport.Models
                             insertQuery = @"UPDATE UserRole 
                                     SET UserRole = @UserRole,
                                         UserRoleDescription = @UserRoleDescription,
-                                        Rates = @Rates
+                                        Rates = @Rates,
+                                        Shift1 = @Shift1,
+                                        Shift2 = @Shift2
                                     WHERE UserRoleId = @userroleid;
                                     SELECT @@ROWCOUNT;";
                         }
@@ -130,6 +132,8 @@ namespace ElabSupport.Models
                             command.Parameters.AddWithValue("@UserRole", newUserRole.UserRole);
                             command.Parameters.AddWithValue("@UserRoleDescription", newUserRole.UserRoleDescription);
                             command.Parameters.AddWithValue("@Rates", newUserRole.Rates ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@Shift1", newUserRole.Shift1 ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@Shift2", newUserRole.Shift2 ?? (object)DBNull.Value);
                             if (newUserRole.UserRoleId > 0)
                             {
                                 command.Parameters.AddWithValue("@userroleid", newUserRole.UserRoleId);

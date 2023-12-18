@@ -31,6 +31,14 @@
             <!-- Add Rates Textbox -->
             <input type="text" id="ratesInput" name="rates" class="form-control" placeholder="Rates">
         </div>
+        <div class="col-md-3">
+            <!-- Add Rates Textbox -->
+            <input type="text" id="shift1Input" name="shift1" class="form-control" placeholder="Shift1 Rates">
+        </div>
+        <div class="col-md-3">
+            <!-- Add Rates Textbox -->
+            <input type="text" id="shift2Input" name="shift2" class="form-control" placeholder="Shift2 Rates">
+        </div>
         <div class="col-md-1">
             <!-- Add Button to Add User Role -->
             <button type="submit" id="btnAdd" class="btn btn-success">Add</button>
@@ -47,22 +55,26 @@
             <th>User Role Name</th>
             <th>User Role Description</th>
             <th>Rates</th>
+            <th>Shift1</th>
+            <th>Shift2</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var role in Model)
         {
-            <tr>
-                <td>@role.UserRoleId</td>
-                <td>@role.UserRole</td>
-                <td>@role.UserRoleDescription</td>
-                <td>@role.Rates</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = role.UserRoleId }, new { @class = "btn btn-primary btn-sm", data_userroleid = role.UserRoleId, data_userRole = role.UserRole, data_userRoleDescription = role.UserRoleDescription, data_rates = role.Rates })
-                    @Html.ActionLink("Delete", "Delete", new { id = role.UserRoleId }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Are you sure you want to delete this user role?');" })
-                </td>
-            </tr>
+        <tr>
+            <td>@role.UserRoleId</td>
+            <td>@role.UserRole</td>
+            <td>@role.UserRoleDescription</td>
+            <td>@role.Rates</td>
+            <td>@role.Shift1</td>
+            <td>@role.Shift2</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = role.UserRoleId }, new { @class = "btn btn-primary btn-sm", data_userroleid = role.UserRoleId, data_userRole = role.UserRole, data_userRoleDescription = role.UserRoleDescription, data_rates = role.Rates })
+                @Html.ActionLink("Delete", "Delete", new { id = role.UserRoleId }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Are you sure you want to delete this user role?');" })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

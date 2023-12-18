@@ -11,6 +11,7 @@ namespace ElabSupport.Models
         public string UserRole { get; set; }
         public decimal? Rates { get; set; }
         public string UserRoleDescription { get; set; }
-        
+        public int? Shift1 { get; set; }
+        public int? Shift2 { get; set; }
     }
 }

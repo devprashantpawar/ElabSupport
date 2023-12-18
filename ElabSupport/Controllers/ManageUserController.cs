@@ -31,7 +31,9 @@ namespace ElabSupport.Controllers
                             UserRoleId = row["UserRoleId"] != DBNull.Value ? Convert.ToInt32(row["UserRoleId"]) : 0,
                             UserRole = row["UserRole"] != DBNull.Value ? row["UserRole"].ToString() : string.Empty,
                             UserRoleDescription = row["UserRoleDescription"] != DBNull.Value ? row["UserRoleDescription"].ToString() : string.Empty,
-                            Rates = row["Rates"] != DBNull.Value ? Convert.ToDecimal(row["Rates"]) : 0
+                            Rates = row["Rates"] != DBNull.Value ? Convert.ToDecimal(row["Rates"]) : 0,
+                            Shift1 = row["Shift1"] != DBNull.Value ? Convert.ToInt32(row["Shift1"]) : 0,
+                            Shift2 = row["Shift2"] != DBNull.Value ? Convert.ToInt32(row["Shift2"]) : 0
                         });
                     }
 
@@ -66,7 +68,7 @@ namespace ElabSupport.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public ActionResult AddUserRole(string userRole, string userRoleDescription, string rates, int userRoleId=0)
+        public ActionResult AddUserRole(string userRole, string userRoleDescription, string rates, string shift1,string shift2, int userRoleId=0)
         {
             try
             {
@@ -75,6 +77,8 @@ namespace ElabSupport.Controllers
                 userRole1.UserRole = userRole;
                 userRole1.UserRoleDescription = userRoleDescription;
                 userRole1.Rates = Convert.ToDecimal(rates);
+                userRole1.Shift1 = Convert.ToInt32(shift1);
+                userRole1.Shift2 = Convert.ToInt32(shift2);
                 // Perform logic to add the new user role to your data source (e.g., database)
                 UserDAC dc = new UserDAC();
                 int newRoleId = dc.AddUserRole(userRole1);
