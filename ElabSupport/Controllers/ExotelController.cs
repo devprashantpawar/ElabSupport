@@ -54,7 +54,7 @@ namespace ElabSupport.Controllers
                 return ex.Message;
             }
         }
-        [System.Web.Http.HttpPut]
+        [System.Web.Http.HttpPost]
         public async Task<ActionResult> UpdateDeviceAvailability(string userId, bool available, string deviceId)
         {
             try
