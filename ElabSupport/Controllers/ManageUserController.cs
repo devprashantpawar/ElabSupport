@@ -170,7 +170,13 @@ namespace ElabSupport.Controllers
             if (Session["UserID"] != null)
             {
                 UserDAC dc = new UserDAC();
-                List<AccountSupportData> AccountSupportData = dc.GetAccountSupportData();
+                DateTime currentDate = DateTime.Now;
+                DateTime fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
+                DateTime toDate = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
+                ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
+                ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
+
+                List<AccountSupportData> AccountSupportData = dc.GetAccountSupportData(fromDate,toDate);
 
                 return View(AccountSupportData);
 
@@ -179,6 +185,16 @@ namespace ElabSupport.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+        }
+       public ActionResult FilterByDate(DateTime? fromDate, DateTime? toDate)
+        {
+            UserDAC dc = new UserDAC();
+
+            // Use fromDate and toDate parameters to filter data
+            List<AccountSupportData> filteredData = dc.GetAccountSupportData(fromDate, toDate);
+
+            // Pass the filtered data to the view
+            return View(filteredData);
         }
     }
 }

@@ -390,7 +390,7 @@ namespace ElabSupport.Models
 
             return result;
         }
-        public List<AccountSupportData> GetAccountSupportData()
+        public List<AccountSupportData> GetAccountSupportData(DateTime? fromDate,DateTime? toDate,string UserId=null)
         {
             List<AccountSupportData> result = new List<AccountSupportData>();
 
@@ -401,6 +401,9 @@ namespace ElabSupport.Models
                 using (SqlCommand command = new SqlCommand("SelectAccountData", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserId);
+                    command.Parameters.AddWithValue("@fromDate", fromDate);
+                    command.Parameters.AddWithValue("@toDate", toDate);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {

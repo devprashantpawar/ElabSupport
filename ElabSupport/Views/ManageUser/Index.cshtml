@@ -94,13 +94,17 @@
             var userRole = $(this).data('userrole');
             var userRoleDescription = $(this).data('userroledescription');
             var rates = $(this).data('rates');
+            var Shift1 = $(this).data('Shiftboth');
+            var Shiftboth = $(this).data('ShiftbothInput');
 
             // Set values in the input boxes
              $('#userRoleIdInput').val(userRoleId);
             $('#userRoleInput').val(userRole);
             $('#userRoleDescriptionInput').val(userRoleDescription);
             $('#ratesInput').val(rates);
-
+            $('#shift1Input').val(Shift1);
+            $('#ShiftbothInput').val(Shiftboth);
+            
             // Toggle visibility of Add and Update buttons
             $('#btnAdd').hide();
             $('#btnUpdate').show();
@@ -111,6 +115,8 @@
             $('#userRoleInput').val('');
             $('#userRoleDescriptionInput').val('');
             $('#ratesInput').val('');
+            $('#shift1Input').val('');
+            $('#ShiftbothInput').val('');
 
             // Toggle visibility of Add and Update buttons
             $('#btnAdd').show();

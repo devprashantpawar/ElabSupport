@@ -6,7 +6,21 @@
 }
 
 <h2>Account</h2>
+@using (Html.BeginForm("FilterByDate", "ManageUser", FormMethod.Get))
+{
+<div>
+    <label for="fromDate">From Date:</label>
+    <input type="date" id="fromDate" name="fromDate" value="@ViewData["fromDate"]" />
 
+    <label for="toDate">To Date:</label>
+    <input type="date" id="toDate" name="toDate" value="@ViewData["toDate"]" />
+
+    <input type="submit" value="Search" class="btn btn-primary" />
+    @* Add hidden fields for fromDate and toDate *@
+    @Html.Hidden("fromDate", ViewData["fromDate"])
+    @Html.Hidden("toDate", ViewData["toDate"])
+</div>
+}
 
 <table class="table">
     <thead>
