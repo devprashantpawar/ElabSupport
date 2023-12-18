@@ -8,17 +8,20 @@
 @Scripts.Render("~/bundles/jqueryval")
 <ul class="nav nav-tabs" id="userTabs">
     <li class="nav-item">
-        <a class="nav-link active" id="addUserTab" data-bs-toggle="tab" href="#addUserContent">Add User</a>
+        <a class="nav-link" id="viewUserTab" data-bs-toggle="tab" href="#viewUserContent">View User</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="viewUserTab" data-bs-toggle="tab" href="#viewUserContent">View User</a>
+        <a class="nav-link" id="addUserTab" data-bs-toggle="tab" href="#addUserContent">Add User</a>
     </li>
 </ul>
 <div class="tab-content">
-    <div class="tab-pane fade show active" id="addUserContent">
+    <div class="tab-pane fade" id="viewUserContent">
+        @Html.Partial("_ViewUser")
+    </div>
 
+    <div class="tab-pane fade" id="addUserContent">
+       
         <h2>Add User</h2>
-
         @using (Html.BeginForm("AddUser", "ManageUser", FormMethod.Post, new { @class = "form" }))
         {
             <div class="row">
@@ -107,39 +110,7 @@
             <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
 
         }
-    </div>
 
-    <div class="tab-pane fade" id="viewUserContent">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Mobile Number</th>
-                    <!-- Add other user data columns as needed -->
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Model.UserList)
-                {
-                <tr>
-                    <td>@user.UserId</td>
-                    <td>@user.Username</td>
-                    <td>@user.FirstName</td>
-                    <td>@user.EmailId</td>
-                    <td>@user.MobileNumber</td>
-                    <td>@user.Address</td>
-                    <td>@user.DeviceId</td>
-                    <td>@user.UserRoleId</td>
-                    <td>@user.Active</td>
-                    <td>@user.Rates</td>
-                    <td>@user.RateType</td>
-                   
-                    <!-- Add other user data columns as needed -->
-                </tr>
-                }
-            </tbody>
-        </table>
     </div>
 </div>
 <script>
@@ -149,7 +120,14 @@
             e.preventDefault();
             $(this).tab('show');
         });
+
+        // Trigger click event on the "View User" tab on page load
+        $('#viewUserTab').click();
+
+        // Optional: If you want to scroll to the bottom when the "View User" tab is selected, uncomment the following line
+        // scrollToBottom();
     });
+
     function clearForm(tab) {
         // Clear individual form fields based on the active tab
         if (tab === 'addUser') {
@@ -167,4 +145,13 @@
             // Clear view user form fields if needed
         }
     }
+
+    function scrollToBottom() {
+        // Scroll to the bottom of the page
+        $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+    }
+
+    // Call scrollToBottom after adding a user
+    // Example: Add this line after your AJAX success callback or form submission
+    // scrollToBottom();
 </script>

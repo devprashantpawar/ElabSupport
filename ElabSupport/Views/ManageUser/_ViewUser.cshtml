@@ -1,0 +1,43 @@
+﻿@model ElabSupport.Models.UserViewModel
+<table class="table">
+    <thead>
+        <tr>
+            <th>UserId</th>
+            <th>UserName</th>
+            <th>FirstName</th>
+            <th>Email</th>
+            <th>Mobile Number</th>
+            <th>Address</th>
+            <th>DeviceId</th>
+            <th>UserRole</th>
+            <th>RateType</th>
+            <th>Rates</th>
+            <th>Active</th>
+            <th>Action</th>
+            <!-- Add other user data columns as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UserList)
+        {
+        <tr>
+            <td>@user.UserId</td>
+            <td>@user.Username</td>
+            <td>@user.FirstName</td>
+            <td>@user.EmailId</td>
+            <td>@user.MobileNumber</td>
+            <td>@user.Address</td>
+            <td>@user.DeviceId</td>
+            <td>@user.UserRoleId</td>
+            <td>@user.RateType</td>
+            <td>@user.Rates</td>
+            <td>@user.Active</td>
+            <td>
+                @Html.ActionLink("Edit", "EditUser", new { id = user.UserId }, new { @class = "btn btn-primary btn-sm" })
+                @Html.ActionLink("Delete", "Delete", new { id = user.UserId }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Are you sure you want to delete this user?');" })
+            </td>
+            <!-- Add other user data columns as needed -->
+        </tr>
+        }
+    </tbody>
+</table>
