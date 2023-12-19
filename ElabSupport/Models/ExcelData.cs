@@ -8,6 +8,7 @@ namespace ElabSupport.Models
     public class ExcelData
     {
         public DateTime Date { get; set; }
+        public int holiday { get; set; }
         public List<string> SupportPersons { get; set; }
         
     }

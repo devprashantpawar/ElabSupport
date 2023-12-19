@@ -285,11 +285,12 @@ namespace ElabSupport.Models
                                         // Assuming your stored procedure parameters are named @ScheduleDate and @OOSPerson
                                         command.Parameters.AddWithValue("@ScheduleDate", data.Date);
                                         command.Parameters.AddWithValue("@OOSPerson", OOSPerson!=null?OOSPerson:"");
+                                        command.Parameters.AddWithValue("@holiday", data.holiday);
 
-                                        // ExecuteNonQuery returns the number of rows affected, which may not be needed
-                                        // If you need to capture the InsertedId, you can use ExecuteScalar instead
-                                        // Note: Make sure to cast the result appropriately (e.g., int)
-                                        result += Convert.ToInt32(command.ExecuteScalar());
+                                    // ExecuteNonQuery returns the number of rows affected, which may not be needed
+                                    // If you need to capture the InsertedId, you can use ExecuteScalar instead
+                                    // Note: Make sure to cast the result appropriately (e.g., int)
+                                    result += Convert.ToInt32(command.ExecuteScalar());
                                     }
                                 
                             }

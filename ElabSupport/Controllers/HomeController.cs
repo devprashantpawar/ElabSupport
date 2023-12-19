@@ -61,8 +61,15 @@ namespace ElabSupport.Controllers
                             for (int row = 2; row <= rowCount; row++)
                             {
                                 var dateCellValue = worksheet.Cells[row, 1].Value?.ToString();
+                                var holidayCellValue = worksheet.Cells[row, 16].Value?.ToString();
+                                int day = 0;
+                                if (!string.IsNullOrEmpty(holidayCellValue))
+                                {
+                                    day = 1;
+                                }
                                 if (!string.IsNullOrEmpty(dateCellValue))
                                 {
+                                   
                                     var supportPerson = new List<string>();
                                     for (int col = 2; col <= colCount; col++)
                                     {
@@ -73,7 +80,8 @@ namespace ElabSupport.Controllers
                                     var excelData = new ExcelData
                                     {
                                         Date = DateTime.Parse(dateCellValue),
-                                        SupportPersons = supportPerson
+                                        SupportPersons = supportPerson,
+                                        holiday = day
                                     };
 
                                     excelDataList.Add(excelData);
