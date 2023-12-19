@@ -16,7 +16,13 @@ namespace ElabSupport.Controllers
             if (Session["UserID"] != null)
             {
                 UserDAC dc = new UserDAC();
-                List<SupportData> supportPersons = dc.GetSupportData();
+                DateTime currentDate = DateTime.Now;
+                DateTime fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
+                DateTime toDate = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
+                ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
+                ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
+
+                List<SupportData> supportPersons = dc.GetSupportData(fromDate,toDate);
 
                 return View(supportPersons);
                
@@ -76,26 +82,38 @@ namespace ElabSupport.Controllers
 
                             UserDAC dc = new UserDAC();
                              int uploaded = dc.UploadExcelData(excelDataList);
-                            if (uploaded != 0)
-                            {
-                                // Do something with the extracted data (e.g., save to database)
-                                List<SupportData> supportPersons = dc.GetSupportData();
-                            }
-                            ViewBag.Message = "File uploaded successfully!";
+
+                            TempData["ErrorMessage"] = "File uploaded successfully!";
+                            return View("Index");
                         }
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.Error = "Error: " + ex.Message;
+                        TempData["ErrorMessage"] = "Error: " + ex.Message;
                     }
                 }
                 else
                 {
-                    ViewBag.Error = "Please choose a file.";
+                    TempData["ErrorMessage"] = "Please choose a file.";
                 }
 
             }
             return View("Index");
         }
+
+        
+        public ActionResult FilterOOSData(DateTime fromDate, DateTime toDate)
+        {
+            UserDAC dc = new UserDAC();
+
+            // Use fromDate and toDate parameters to filter data
+            List<SupportData> supportPersons = dc.GetSupportData(fromDate,toDate);
+            ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
+            ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
+
+            // Pass the filtered data to the view
+            return View("_Home",supportPersons);
+        }
+
     }
 }

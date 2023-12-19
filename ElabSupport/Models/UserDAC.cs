@@ -310,7 +310,7 @@ namespace ElabSupport.Models
 
             return result;
         }
-        public List<SupportData> GetSupportData()
+        public List<SupportData> GetSupportData(DateTime? fromDate, DateTime? toDate,string UserId=null)
         {
             List<SupportData> result = new List<SupportData>();
 
@@ -321,6 +321,9 @@ namespace ElabSupport.Models
                 using (SqlCommand command = new SqlCommand("GetSupportPersonsByDate", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserId);
+                    command.Parameters.AddWithValue("@fromDate", fromDate);
+                    command.Parameters.AddWithValue("@toDate", toDate);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {

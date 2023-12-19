@@ -1,35 +1,41 @@
 ﻿@model List<ElabSupport.Models.SupportData>
+@{
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
 
-<div class="container mt-4">
-    <h2>Support Persons</h2>
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <script>
+        alert('@Html.Raw(errorMessage)');
+    </script>
+}
 
-    <div class="row mb-3">
-        <div class="col">
-            <!-- Replace the checkbox with a toggle button -->
-            <input type="checkbox" id="toggleSwitch" data-toggle="toggle">
-        </div>
-        <div class="col">
-            <input type="file" name="UploadedFile" class="form-control" />
-        </div>
-        <div class="col">
-            <input type="submit" name="Submit" value="Submit" class="btn btn-primary" />
-        </div>
+<h2>Support Persons</h2>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="col-8">
+        <input type="file" name="UploadedFile" class="form-control" />
     </div>
-    @using (Html.BeginForm("FilterByDate", "ManageUser", FormMethod.Get))
+    <div class="col-4">
+        <input type="submit" name="Upload" value="Upload" class="btn btn-primary" />
+    </div>
+}
+
+    @using (Html.BeginForm("FilterOOSData", "Home", FormMethod.Get))
     {
-        <div>
-            <label for="fromDate">From Date:</label>
-            <input type="date" id="fromDate" name="fromDate" value="@ViewData["fromDate"]" />
+    <div>
+        <label for="fromDate">From Date:</label>
+        <input type="date" id="fromDate" name="fromDate" value="@ViewData["fromDate"]" />
 
-            <label for="toDate">To Date:</label>
-            <input type="date" id="toDate" name="toDate" value="@ViewData["toDate"]" />
-
-            <input type="submit" value="Search" class="btn btn-primary" />
-            @* Add hidden fields for fromDate and toDate *@
-            @Html.Hidden("fromDate", ViewData["fromDate"])
-            @Html.Hidden("toDate", ViewData["toDate"])
-        </div>
+        <label for="toDate">To Date:</label>
+        <input type="date" id="toDate" name="toDate" value="@ViewData["toDate"]" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+        @Html.Hidden("fromDate", ViewData["fromDate"])
+        @Html.Hidden("toDate", ViewData["toDate"])
+    </div>
     }
+<div class="container mt-4">
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -99,7 +105,7 @@
 <script>
     $(document).ready(function () {
         // Initialize Bootstrap Toggle
-       // $('#toggleSwitch').bootstrapToggle();
+        // $('#toggleSwitch').bootstrapToggle();
 
         // Add an event listener for the toggle event
         $('#toggleSwitch').change(function () {

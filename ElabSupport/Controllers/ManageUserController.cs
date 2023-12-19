@@ -214,15 +214,18 @@ namespace ElabSupport.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
-       public ActionResult FilterByDate(DateTime? fromDate, DateTime? toDate)
+       public ActionResult FilterByDate(DateTime fromDate, DateTime toDate)
         {
             UserDAC dc = new UserDAC();
 
             // Use fromDate and toDate parameters to filter data
             List<AccountSupportData> filteredData = dc.GetAccountSupportData(fromDate, toDate);
+            ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
+            ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
 
             // Pass the filtered data to the view
-            return View(filteredData);
+            return View("Account",filteredData);
         }
+       
     }
 }
