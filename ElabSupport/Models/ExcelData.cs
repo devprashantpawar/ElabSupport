@@ -9,6 +9,7 @@ namespace ElabSupport.Models
     {
         public DateTime Date { get; set; }
         public int holiday { get; set; }
+        public int Interface { get; set; }
         public List<string> SupportPersons { get; set; }
         
     }

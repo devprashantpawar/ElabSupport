@@ -275,25 +275,37 @@ namespace ElabSupport.Models
                     {
                         foreach (var data in excelData)
                         {
-                            foreach (var OOSPerson in data.SupportPersons)
+                            for (int i = 0; i < data.SupportPersons.Count; i++)
                             {
-                                
+                                var OOSPerson = data.SupportPersons[i];
+                                if (i != 14)
+                                {
                                     using (SqlCommand command = new SqlCommand("OOSExcelUpload", connection, transaction))
                                     {
                                         command.CommandType = CommandType.StoredProcedure;
 
                                         // Assuming your stored procedure parameters are named @ScheduleDate and @OOSPerson
                                         command.Parameters.AddWithValue("@ScheduleDate", data.Date);
-                                        command.Parameters.AddWithValue("@OOSPerson", OOSPerson!=null?OOSPerson:"");
+                                        command.Parameters.AddWithValue("@OOSPerson", OOSPerson != null ? OOSPerson : "");
                                         command.Parameters.AddWithValue("@holiday", data.holiday);
+                                        if (i == 13)
+                                        {
+                                            command.Parameters.AddWithValue("@Interface", 1);
+                                        }
+                                        else
+                                        {
+                                            command.Parameters.AddWithValue("@Interface", 0);
+                                        }
 
-                                    // ExecuteNonQuery returns the number of rows affected, which may not be needed
-                                    // If you need to capture the InsertedId, you can use ExecuteScalar instead
-                                    // Note: Make sure to cast the result appropriately (e.g., int)
-                                    result += Convert.ToInt32(command.ExecuteScalar());
+
+                                        // ExecuteNonQuery returns the number of rows affected, which may not be needed
+                                        // If you need to capture the InsertedId, you can use ExecuteScalar instead
+                                        // Note: Make sure to cast the result appropriately (e.g., int)
+                                        result += Convert.ToInt32(command.ExecuteScalar());
                                     }
-                                
+                                }
                             }
+
                         }
 
                         // If everything is successful, commit the transaction

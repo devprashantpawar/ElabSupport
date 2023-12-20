@@ -62,6 +62,7 @@ namespace ElabSupport.Controllers
                             {
                                 var dateCellValue = worksheet.Cells[row, 1].Value?.ToString();
                                 var holidayCellValue = worksheet.Cells[row, 16].Value?.ToString();
+                               
                                 int day = 0;
                                 if (!string.IsNullOrEmpty(holidayCellValue))
                                 {
@@ -89,10 +90,10 @@ namespace ElabSupport.Controllers
                             }
 
                             UserDAC dc = new UserDAC();
-                             int uploaded = dc.UploadExcelData(excelDataList);
+                            int uploaded = dc.UploadExcelData(excelDataList);
 
                             TempData["ErrorMessage"] = "File uploaded successfully!";
-                            return View("Index");
+                            return RedirectToAction("Index");
                         }
                     }
                     catch (Exception ex)
