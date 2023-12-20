@@ -273,7 +273,7 @@ namespace ElabSupport.Models
                 {
                     try
                     {
-                        double daycount = 0.5;
+                        double daycount = 1;
                         foreach (var data in excelData)
                         {
                             for (int i = 0; i < data.SupportPersons.Count; i++)
@@ -281,6 +281,11 @@ namespace ElabSupport.Models
                                 var OOSPerson = data.SupportPersons[i];
                                 if (i != 14)
                                 {
+                                    // mark as half day except holiday
+                                    if((i== 2 || i== 4) && data.holiday!=1)
+                                    {
+                                        daycount = 0.5;
+                                    }
                                     using (SqlCommand command = new SqlCommand("OOSExcelUpload", connection, transaction))
                                     {
                                         command.CommandType = CommandType.StoredProcedure;
