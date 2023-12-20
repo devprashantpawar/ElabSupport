@@ -1,0 +1,61 @@
+﻿@model List<ElabSupport.Models.UserAccountData>
+<h5>Personal Details:</h5>
+<table class="table">
+    <thead>
+        <tr>
+           
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Name:</td>
+            <td>@Model[1].OOSPerson</td>
+            <td>MobileNumber</td>
+            <td>@Model[1].MobileNumber</td>
+        </tr>
+        <tr>
+            <td>UserRole:</td>
+            <td>@Model[1].UserRole</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>TotalDay:</td>
+            <td>@Model.Sum(u => Convert.ToDouble(u.Day))</td>
+            <td>TotalAmount</td>
+            <td>@Model.Sum(u => Convert.ToDouble(u.Amount))</td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<h5>Account Details:</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ScheduleDate</th>
+            <th>Day</th>
+            <th>Amount</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.ScheduleDate</td>
+                    <td>@user.Day</td>
+                    <td>@user.Amount</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="15">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

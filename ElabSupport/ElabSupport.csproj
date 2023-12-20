@@ -360,6 +360,7 @@
     <Content Include="Views\ManageUser\AddUser.cshtml" />
     <Content Include="Views\ManageUser\Account.cshtml" />
     <Content Include="Views\ManageUser\_ViewUser.cshtml" />
+    <Content Include="Views\ManageUser\ViewUserAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

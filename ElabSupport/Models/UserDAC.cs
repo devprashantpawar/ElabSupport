@@ -273,6 +273,7 @@ namespace ElabSupport.Models
                 {
                     try
                     {
+                        double daycount = 0.5;
                         foreach (var data in excelData)
                         {
                             for (int i = 0; i < data.SupportPersons.Count; i++)
@@ -288,6 +289,7 @@ namespace ElabSupport.Models
                                         command.Parameters.AddWithValue("@ScheduleDate", data.Date);
                                         command.Parameters.AddWithValue("@OOSPerson", OOSPerson != null ? OOSPerson : "");
                                         command.Parameters.AddWithValue("@holiday", data.holiday);
+                                        command.Parameters.AddWithValue("@daycount", daycount);
                                         if (i == 13)
                                         {
                                             command.Parameters.AddWithValue("@Interface", 1);
@@ -434,6 +436,43 @@ namespace ElabSupport.Models
                             };
 
                             result.Add(AccountSupportData);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+        public List<UserAccountData> GetUserAccountData(DateTime? fromDate, DateTime? toDate, string UserId = null)
+        {
+            List<UserAccountData> result = new List<UserAccountData>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SelectUserAccountData", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserId);
+                    command.Parameters.AddWithValue("@fromDate", fromDate);
+                    command.Parameters.AddWithValue("@toDate", toDate);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            UserAccountData UserAccountData = new UserAccountData
+                            {
+                                ScheduleDate = reader["ScheduleDate"] != DBNull.Value ? reader["ScheduleDate"].ToString() : null,
+                                OOSPerson = reader["OOSPerson"] != DBNull.Value ? reader["OOSPerson"].ToString() : null,
+                                UserRole = reader["UserRole"] != DBNull.Value ? reader["UserRole"].ToString() : null,
+                                Day = reader["Days"] != DBNull.Value ? reader["Days"].ToString() : null,
+                                Amount= reader["Amount"] != DBNull.Value ? reader["Amount"].ToString() : null,
+                                MobileNumber = reader["MobileNumber"] != DBNull.Value ? reader["MobileNumber"].ToString() : null
+                            };
+
+                            result.Add(UserAccountData);
                         }
                     }
                 }
