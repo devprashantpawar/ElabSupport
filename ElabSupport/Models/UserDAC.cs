@@ -273,16 +273,17 @@ namespace ElabSupport.Models
                 {
                     try
                     {
-                        double daycount = 1;
+                        
                         foreach (var data in excelData)
                         {
                             for (int i = 0; i < data.SupportPersons.Count; i++)
                             {
+                                double daycount = 1;
                                 var OOSPerson = data.SupportPersons[i];
                                 if (i != 14)
                                 {
                                     // mark as half day except holiday
-                                    if((i== 2 || i== 4) && data.holiday!=1)
+                                    if((i== 2 || i== 3) && data.holiday!=1)
                                     {
                                         daycount = 0.5;
                                     }
@@ -295,7 +296,7 @@ namespace ElabSupport.Models
                                         command.Parameters.AddWithValue("@OOSPerson", OOSPerson != null ? OOSPerson : "");
                                         command.Parameters.AddWithValue("@holiday", data.holiday);
                                         command.Parameters.AddWithValue("@daycount", daycount);
-                                        if (i == 13)
+                                        if (i > 4 || (i== 4  && data.holiday==0))
                                         {
                                             command.Parameters.AddWithValue("@Interface", 1);
                                         }
