@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Account</h2>
+<h2>Account summary</h2>
+
 @using (Html.BeginForm("FilterByDate", "ManageUser", FormMethod.Get))
 {
 <div>
@@ -16,13 +17,70 @@
     <input type="date" id="toDate" name="toDate" value="@ViewData["toDate"]" />
 
     <input type="submit" value="Search" class="btn btn-primary" />
+    <button class="btn btn-primary" onclick="printTables()">Print</button>
+
     @* Add hidden fields for fromDate and toDate *@
     @Html.Hidden("fromDate", ViewData["fromDate"])
     @Html.Hidden("toDate", ViewData["toDate"])
 </div>
 }
 
-<table class="table">
+<!-- Print button -->
+
+@section scripts {
+    <script>
+        function printTables() {
+            var printWindow = window.open('', '_blank');
+            var summaryTableContent = document.querySelector('.summary-table').outerHTML;
+            var detailsTableContent = document.querySelector('.details-table').outerHTML;
+
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Print</title></head><body>');
+            printWindow.document.write('<h2>Account summary</h2>');
+            printWindow.document.write(summaryTableContent);
+            printWindow.document.write('<h3>Account Details</h3>');
+            printWindow.document.write(detailsTableContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+}
+
+<table class="table summary-table">
+    <thead>
+        <tr>
+            <th>Account Type</th>
+            <th>Total Days</th>
+            <th>Total Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Account</th>
+            <td>@Model.Sum(u => Convert.ToDouble(u.Days))</td>
+            <td>@Model.Sum(u => Convert.ToDouble(u.TotalAmount))</td>
+        </tr>
+        <tr>
+            <th>Lead</th>
+            <td>@Model.Where(u => u.UserRole?.ToLower() == "lead").Sum(u => Convert.ToDouble(u.Days))</td>
+            <td>@Model.Where(u => u.UserRole?.ToLower() == "lead").Sum(u => Convert.ToDouble(u.TotalAmount))</td>
+
+        </tr>
+        <tr>
+            <th>Senior Support</th>
+            <td>@Model.Where(u => u.UserRole?.ToLower() == "senior support").Sum(u => Convert.ToDouble(u.Days))</td>
+            <td>@Model.Where(u => u.UserRole?.ToLower() == "senior support").Sum(u => Convert.ToDouble(u.TotalAmount))</td>
+        </tr>
+        <tr>
+            <th>Junior Support</th>
+            <td>@Model.Where(u => u.UserRole?.ToLower() == "junior support").Sum(u => Convert.ToDouble(u.Days))</td>
+            <td>@Model.Where(u => u.UserRole?.ToLower() == "junior support").Sum(u => Convert.ToDouble(u.TotalAmount))</td>
+        </tr>
+    </tbody>
+</table>
+<h3>Account Details</h3>
+<table class="table details-table" id="accountDetailsTable">
     <thead>
         <tr>
             <th>OOSPerson</th>

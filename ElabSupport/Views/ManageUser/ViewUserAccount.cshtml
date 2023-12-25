@@ -1,9 +1,29 @@
 ﻿@model List<ElabSupport.Models.UserAccountData>
-<h5>Personal Details:</h5>
-<table class="table">
+<button class="btn btn-primary" onclick="printTables()" style="position: relative; top: 11px; left: 69%; transform: translateX(-50%);">Print</button>
+
+@section scripts {
+    <script>
+        function printTables() {
+            var printWindow = window.open('', '_blank');
+            var summaryTableContent = document.querySelector('.summary-table').outerHTML;
+            var detailsTableContent = document.querySelector('.details-table').outerHTML;
+
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Print</title></head><body>');
+            printWindow.document.write('<h2>Personal Details:</h2>');
+            printWindow.document.write(summaryTableContent);
+            printWindow.document.write('<h3>Account Details:</h3>');
+            printWindow.document.write(detailsTableContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+}
+<h3>Personal Details:</h3>
+<table class="table summary-table">
     <thead>
         <tr>
-           
         </tr>
     </thead>
     <tbody>
@@ -28,8 +48,8 @@
     </tbody>
 </table>
 <br />
-<h5>Account Details:</h5>
-<table class="table">
+<h3>Account Details:</h3>
+<table class="table details-table">
     <thead>
         <tr>
             <th>ScheduleDate</th>
