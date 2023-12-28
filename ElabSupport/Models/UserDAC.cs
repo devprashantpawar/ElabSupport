@@ -512,6 +512,33 @@ namespace ElabSupport.Models
 
             return deactivated;
         }
+        public bool UpdateUserStatus(string UserId,bool status)
+        {
+            bool deactivated = false;
+            var query = " Insert into ActiveStatus values(@userid,GETDATE(),@status)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@userid", UserId);
+                    command.Parameters.AddWithValue("@status", status);
+
+                    // Execute the query
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // Check if any rows were affected
+                    if (rowsAffected > 0)
+                    {
+                        // Deactivation successful
+                        deactivated = true;
+                    }
+                }
+            }
+
+            return deactivated;
+        }
 
     }
 }

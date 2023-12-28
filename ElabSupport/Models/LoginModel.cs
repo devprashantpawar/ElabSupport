@@ -16,5 +16,10 @@ namespace ElabSupport.Models
         public bool Status { get; set; }
         public string DeviceId {get;set;}
     }
+    public class UpdateuserStatus
+    {
+        public string UserId { get; set; }
+        public bool Status { get; set; }
+    }
 
 }

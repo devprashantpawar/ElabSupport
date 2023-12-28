@@ -30,9 +30,31 @@ namespace ElabSupport.Controllers
                 string userid = data.Rows[0].Field<string>("UserId").ToString();
                 ExotelController ec = new ExotelController();
                 var Data = await ec.GetUserData(userid);
-                string jsonData = JsonConvert.SerializeObject(Data);
-                jsonData = jsonData.Replace("\\", "");
-                return Json(jsonData, JsonRequestBehavior.AllowGet);
+                if (data != null)
+                {
+                    string jsonData = JsonConvert.SerializeObject(Data);
+                    string userData = JsonConvert.SerializeObject(data);
+                    var combinedData = new
+                    {
+                        UserData = userData,
+                        exotelData = jsonData
+                    };
+                    string combinedJsonData = JsonConvert.SerializeObject(combinedData);
+                    combinedJsonData = combinedJsonData.Replace("\\", "");
+                    return Json(combinedJsonData, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    string userData = JsonConvert.SerializeObject(data);
+                    var combinedData = new
+                    {
+                        UserData = userData,
+                        exotelData = ""
+                    };
+                    string combinedJsonData = JsonConvert.SerializeObject(combinedData);
+                    combinedJsonData = combinedJsonData.Replace("\\", "");
+                    return Json(combinedJsonData, JsonRequestBehavior.AllowGet);
+                }
             }
             else
             {
@@ -72,26 +94,15 @@ namespace ElabSupport.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
-        [System.Web.Http.HttpGet]
-        public ActionResult ViewUserAccount(string id)
+        
+        [System.Web.Http.HttpPost]
+        public ActionResult UpdateStatus([FromBody] UpdateuserStatus model)
         {
-            if (Session["UserID"] != null)
-            {
-                UserDAC dc = new UserDAC();
-                DateTime currentDate = DateTime.Now;
-                DateTime fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-                DateTime toDate = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
-                ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
-                ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
+            
+            UserDAC ec = new UserDAC();
+            bool status = ec.UpdateUserStatus(model.UserId, model.Status);
+            return Json(status, JsonRequestBehavior.AllowGet);
 
-                List<UserAccountData> UserAccountData = dc.GetUserAccountData(fromDate, toDate, id);
-
-                return View(UserAccountData);
-            }
-            else
-            {
-                return View();
-            }
         }
 
     }
