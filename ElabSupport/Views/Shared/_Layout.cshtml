@@ -25,7 +25,7 @@
                 {
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("DashBoard", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("DashBoard", "DashBoard", "Home", new { area = "" }, null)</li>
                     @if (Session["UserRoleId"] as string == "1" || Session["UserRoleId"] as string == "3" || Session["UserRoleId"] as string == "1008")
                     {
                      

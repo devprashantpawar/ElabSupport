@@ -72,6 +72,27 @@ namespace ElabSupport.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
+        [System.Web.Http.HttpGet]
+        public ActionResult ViewUserAccount(string id)
+        {
+            if (Session["UserID"] != null)
+            {
+                UserDAC dc = new UserDAC();
+                DateTime currentDate = DateTime.Now;
+                DateTime fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
+                DateTime toDate = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
+                ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
+                ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
+
+                List<UserAccountData> UserAccountData = dc.GetUserAccountData(fromDate, toDate, id);
+
+                return View(UserAccountData);
+            }
+            else
+            {
+                return View();
+            }
+        }
 
     }
 

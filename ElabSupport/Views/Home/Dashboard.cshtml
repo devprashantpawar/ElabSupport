@@ -1,0 +1,115 @@
+﻿<link rel="stylesheet" href="~/Content/styles/dashboard.css">
+<div class="userSection">
+    <div class="userInfoSection">
+        <div class="activeUser">
+            <div class="userBio">
+                <img class="profileImg" src="~/Content/icons/profileimage.svg" />
+                <p class="userName"> @Session["UserName"]</p>
+                <p class="uEmail lblProfile"><label>E-mail:</label> nikhil.apte@gmail.com</p>
+                <p class="uID lblProfile"><label>ID:</label> 548245346</p>
+                <p class="uState lblProfile">
+                    Status: <label class="stateGreen"> Active</label>
+                </p>
+
+            </div>
+            <div class="toggleState">
+                <div class="toggle-outer toggled-off" onclick="toggleState(this)">
+                    <div class="toggle-inner">
+                        <p class="toggle-text">Off</p>
+                    </div>
+                </div>
+                <p class="lblToggleState">
+                    You are in <strong class="activeGreen">Active</strong> state
+                </p>
+            </div>
+        </div>
+        <div class="workingHours">
+            <div class="containerWorkingHour">
+                <h5 class="lblWorkingHours">Working Hours</h5>
+                <div class="btn-group">
+                    <select class="timeSpan form-select" aria-label="Default select example">
+                        <option selected>Weekly</option>
+                        <option value="1">Monthly</option>
+                        <option value="2">Yearly</option>
+                    </select>
+                </div>
+            </div>
+            <div id="workingHoursChartContainer">
+                <canvas id="workingHoursChart" width="210" height="210"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="userList">
+        <h5 class="lblOthers">Others</h5>
+        <table class="table table-borderless tblExotel table-responsive">
+            @*<thead class="table-active">
+                    <tr>
+                        <th scope="col">Names</th>
+                        <th scope="col">User Role</th>
+                        <th scope="col">User Role Description</th>
+                        <th scope="col">Extra Work Hours</th>
+                        <th scope="col">Rates</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                    </tr>
+                </tbody>*@
+        </table>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/Scripts/custom/app.js"
+        crossorigin="anonymous"></script>
+
+<script>
+    const ctx = document.getElementById("workingHoursChart");
+
+    new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: ["Hours working"],
+            datasets: [{
+                label: "Working Hours",
+                data: [50],
+                backgroundColor: "rgb(255, 99, 132)"
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+<script>
+    function toggleState(element) {
+        element.classList.toggle('toggled-off');
+        const text = element.querySelector('.toggle-text');
+        text.textContent = element.classList.contains('toggled-off') ? 'Off' : 'On';
+    }
+</script>

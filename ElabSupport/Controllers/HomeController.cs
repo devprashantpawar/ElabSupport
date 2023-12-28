@@ -123,6 +123,20 @@ namespace ElabSupport.Controllers
             // Pass the filtered data to the view
             return View("_Home",supportPersons);
         }
+        public ActionResult Dashboard()
+        {
+            if (Session["UserID"] != null)
+            {
 
+
+                return View();
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
     }
 }
