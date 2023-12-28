@@ -198,14 +198,14 @@ namespace ElabSupport.Models
                             command.Parameters.AddWithValue("@Username", newUser.Username);
                             command.Parameters.AddWithValue("@Password", newUser.Password);
                             command.Parameters.AddWithValue("@FirstName", newUser.FirstName);
-                            command.Parameters.AddWithValue("@DeviceId", newUser.DeviceId);
+                            command.Parameters.AddWithValue("@DeviceId", newUser.DeviceId!=null?newUser.DeviceId:"0");
                             command.Parameters.AddWithValue("@UserRoleId", newUser.UserRoleId);
                             command.Parameters.AddWithValue("@RateType", newUser.RateType);
                             command.Parameters.AddWithValue("@Rates", newUser.Rates ?? (object)DBNull.Value);
                             command.Parameters.AddWithValue("@Active", 1);
                             command.Parameters.AddWithValue("@EmailId", newUser.EmailId);
                             command.Parameters.AddWithValue("@MobileNumber", newUser.MobileNumber);
-                            command.Parameters.AddWithValue("@Address", newUser.Address);
+                            command.Parameters.AddWithValue("@Address", newUser.Address!=null?newUser.Address:"");
                             if (newUser.UserId != null)
                             {
                                 // If not null, add the UserId as a parameter
