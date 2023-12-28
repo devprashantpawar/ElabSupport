@@ -116,7 +116,7 @@ namespace ElabSupport.Controllers
                         {
                             usermodel.Add(new UserModel
                             {
-                                UserId = row["UserId"] != DBNull.Value ? row["UserRoleId"].ToString() : string.Empty,
+                                UserId = row["UserId"] != DBNull.Value ? row["UserId"].ToString() : string.Empty,
                                 Username = row["Username"] != DBNull.Value ? row["Username"].ToString() : string.Empty,
                                 FirstName = row["FirstName"] != DBNull.Value ? row["FirstName"].ToString() : string.Empty,
                                 DeviceId = row["DeviceId"] != DBNull.Value ? row["DeviceId"].ToString() : string.Empty,
@@ -161,14 +161,14 @@ namespace ElabSupport.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddUser(UserModel newUser)
+        public ActionResult AddUser(UserViewModel newUser)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     UserDAC dc = new UserDAC();
-                    int newuserId = dc.AddUser(newUser);
+                    int newuserId = dc.AddUser(newUser.user);
                     if (newuserId == 1)
                     {
                         TempData["ErrorMessage"] = "User Added!...";
@@ -184,11 +184,11 @@ namespace ElabSupport.Controllers
                     // Handle exceptions and return an error message
                     return View();
                 }
-                return RedirectToAction("AddUser");
+                //return RedirectToAction("AddUser");
             }
 
             // If the model is not valid, return to the same view with validation errors
-            return View(newUser);
+            return View("_ViewUser");
         }
 
         public ActionResult Account()
@@ -250,5 +250,25 @@ namespace ElabSupport.Controllers
                 return View();
             }
         }
+
+        public ActionResult DeleteUser(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Retrieve the user role by id from your data source (e.g., database)
+            UserDAC dc = new UserDAC();
+            bool deleted = dc.DeleteUser(id);
+
+            if (deleted == false)
+            {
+                return HttpNotFound();
+            }
+
+            return RedirectToAction("AddUser");
+        }
+
     }
 }

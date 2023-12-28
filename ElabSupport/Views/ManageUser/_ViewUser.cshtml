@@ -18,8 +18,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.UserList)
+        @if (Model!=null && Model.UserList != null)
         {
+            foreach (var user in Model.UserList)
+            {
         <tr>
             <td>@user.UserId</td>
             <td>@user.Username</td>
@@ -34,10 +36,11 @@
             <td>@user.Active</td>
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = user.UserId }, new { @class = "btn btn-primary btn-sm" })
-                @Html.ActionLink("Delete", "Delete", new { id = user.UserId }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Are you sure you want to delete this user?');" })
+                @Html.ActionLink("Delete", "DeleteUser", new { id = user.UserId }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Are you sure you want to delete this user?');" })
             </td>
             <!-- Add other user data columns as needed -->
         </tr>
+            }
         }
     </tbody>
 </table>

@@ -486,6 +486,32 @@ namespace ElabSupport.Models
 
             return result;
         }
+        public bool DeleteUser(string UserId)
+        {
+            bool deactivated = false;
+            var query = "UPDATE users SET Active = 0 WHERE UserId = @userid";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@userid", UserId);
+
+                    // Execute the query
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // Check if any rows were affected
+                    if (rowsAffected > 0)
+                    {
+                        // Deactivation successful
+                        deactivated = true;
+                    }
+                }
+            }
+
+            return deactivated;
+        }
 
     }
 }
