@@ -1,4 +1,5 @@
 ﻿<link rel="stylesheet" href="~/Content/styles/dashboard.css">
+
 <div class="userSection">
     <div class="userInfoSection">
         <div class="activeUser">
@@ -84,32 +85,10 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="~/Scripts/custom/app.js"
-        crossorigin="anonymous"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    const ctx = document.getElementById("workingHoursChart");
+  
 
-    new Chart(ctx, {
-        type: "doughnut",
-        data: {
-            labels: ["Hours working"],
-            datasets: [{
-                label: "Working Hours",
-                data: [50],
-                backgroundColor: "rgb(255, 99, 132)"
-            }]
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: false
-        }
-    });
 </script>
-<script>
-    function toggleState(element) {
-        element.classList.toggle('toggled-off');
-        const text = element.querySelector('.toggle-text');
-        text.textContent = element.classList.contains('toggled-off') ? 'Off' : 'On';
-    }
-</script>
+<script src="~/Scripts/custom/app.js" crossorigin="anonymous"></script>

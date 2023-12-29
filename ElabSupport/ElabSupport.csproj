@@ -275,7 +275,19 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dashboard.css" />
+    <Content Include="Content\icons\Group.svg" />
+    <Content Include="Content\icons\icoBell.svg" />
+    <Content Include="Content\icons\icoCalender.svg" />
+    <Content Include="Content\icons\icoDashboard.svg" />
+    <Content Include="Content\icons\icoUser.svg" />
+    <Content Include="Content\icons\profileimage.svg" />
+    <Content Include="Content\icons\sample.svg" />
+    <Content Include="Content\icons\Vector.svg" />
+    <Content Include="Content\images\elablogo.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\styles\dashboard.css" />
+    <Content Include="Content\styles\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -305,6 +317,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\custom\app.js" />
     <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
