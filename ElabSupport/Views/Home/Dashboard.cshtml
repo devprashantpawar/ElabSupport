@@ -6,8 +6,9 @@
             <div class="userBio">
                 <img class="profileImg" src="~/Content/icons/profileimage.svg" />
                 <p class="userName"> @Session["UserName"]</p>
-                <p class="uEmail lblProfile"><label>E-mail:</label> nikhil.apte@gmail.com</p>
-                <p class="uID lblProfile"><label>ID:</label> 548245346</p>
+                <p class="uEmail lblProfile"><label>Role:</label> @Session["UserRole"]</p>
+                <p class="uEmail lblProfile"><label>E-mail:</label> @Session["EmailId"]</p>
+                <p class="uID lblProfile"><label>MobileNumber:</label> @Session["MobileNumber"]</p>
                 <p class="uState lblProfile">
                     Status: <label class="stateGreen"> Active</label>
                 </p>
