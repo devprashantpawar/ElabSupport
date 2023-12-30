@@ -16,7 +16,7 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade" id="viewUserContent">
-        <h2>Add User</h2>
+        <h3 class="Add User">Add User</h3>
         @using (Html.BeginForm("AddUser", "ManageUser", FormMethod.Post, new { @class = "form" }))
         {
             <div class="row">
@@ -94,10 +94,10 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Add User</button>
-            <button type = "button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
 
-    }
-   
+        }
+
     </div>
 
     <div class="tab-pane fade" id="addUserContent">

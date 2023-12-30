@@ -1,0 +1,95 @@
+﻿/* CSS Styles */
+
+/* Account Summary */
+/* CSS Styles for h2 with class "account-summary" */
+h2.account-summary {
+    text-decoration: underline;
+    color: #3498db; /* Change color if needed */
+    font-size: 24px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+}
+h3.account-Details {
+    text-decoration: underline;
+    color: #3498db; /* Change color if needed */
+    font-size: 24px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+}
+
+User Roles
+/* Flex Container */
+.form-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+    margin-right: 5px;
+}
+
+/* Date Input */
+.date-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Buttons */
+.submit-btn,
+.print-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.submit-btn {
+    background-color: #3498db;
+}
+
+.print-btn {
+    background-color: #2ecc71;
+}
+
+/* styles.css */
+
+/* General table styles */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Specific styles for Account types */
+/* You can add more specific styling here */
+th:nth-child(1), td:nth-child(1) {
+    /* Account Type column */
+    font-weight: bold;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    /* Total Days column */
+    text-align: center;
+}
+
+th:nth-child(3), td:nth-child(3) {
+    /* Total Amount column */
+    text-align: right;
+}
+
