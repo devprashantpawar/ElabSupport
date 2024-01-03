@@ -26,7 +26,7 @@
             <div class="navbar-collapse collapse">
                 @if (!string.IsNullOrEmpty(Session["UserId"] as string))
                 {
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" style="color:white !important">
                         <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("DashBoard", "DashBoard", "Home", new { area = "" }, null)</li>
                         @if (Session["UserRoleId"] as string == "1" || Session["UserRoleId"] as string == "3" || Session["UserRoleId"] as string == "1008")
