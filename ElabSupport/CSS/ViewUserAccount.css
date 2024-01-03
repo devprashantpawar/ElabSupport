@@ -1,0 +1,35 @@
+﻿.Personal.Details {
+    text-decoration: underline;
+    color: #3498db; /* Change color if needed */
+    font-size: 24px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+}
+.Account.Detail {
+    text-decoration: underline;
+    color: #3498db; /* Change color if needed */
+    font-size: 24px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+}
+
+/* General table styles */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+

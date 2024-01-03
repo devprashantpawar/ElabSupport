@@ -4,27 +4,33 @@
     ViewBag.Title = "Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<head>
+    <!-- Other meta tags and scripts -->
+    <link href="~/CSS/AccountSummary.css" rel="stylesheet" />
+</head>
 
-<h2>Account summary</h2>
+<h2 class="account-summary">Account summary</h2>
+<body>
+    <div class="form-container col-xs-offset-5">
+        @using (Html.BeginForm("FilterByDate", "ManageUser", FormMethod.Get))
+        {
+        <div class="form-content">
+            <label for="fromDate">From Date:</label> &nbsp &nbsp
+            <input type="date" id="fromDate" name="fromDate" value="@ViewData["fromDate"]" class="date-input" /> &nbsp &nbsp
 
-@using (Html.BeginForm("FilterByDate", "ManageUser", FormMethod.Get))
-{
-<div>
-    <label for="fromDate">From Date:</label>
-    <input type="date" id="fromDate" name="fromDate" value="@ViewData["fromDate"]" />
+            <label for="toDate">To Date:</label> &nbsp &nbsp
+            <input type="date" id="toDate" name="toDate" value="@ViewData["toDate"]" class="date-input" /> &nbsp &nbsp
 
-    <label for="toDate">To Date:</label>
-    <input type="date" id="toDate" name="toDate" value="@ViewData["toDate"]" />
+            <input type="submit" value="Search" class="btn btn-primary submit-btn" /> &nbsp &nbsp
+            <button class="btn btn-primary print-btn" onclick="printTables()">Print</button> &nbsp &nbsp
 
-    <input type="submit" value="Search" class="btn btn-primary" />
-    <button class="btn btn-primary" onclick="printTables()">Print</button>
-
-    @* Add hidden fields for fromDate and toDate *@
-    @Html.Hidden("fromDate", ViewData["fromDate"])
-    @Html.Hidden("toDate", ViewData["toDate"])
-</div>
-}
-
+            @* Add hidden fields for fromDate and toDate *@
+            @Html.Hidden("fromDate", ViewData["fromDate"])
+            @Html.Hidden("toDate", ViewData["toDate"])
+        </div>
+        }
+    </div>
+</body>
 <!-- Print button -->
 
 @section scripts {
@@ -46,6 +52,7 @@
         }
     </script>
 }
+<br />
 
 <table class="table summary-table">
     <thead>
@@ -79,7 +86,8 @@
         </tr>
     </tbody>
 </table>
-<h3>Account Details</h3>
+
+<h3 class="account-Details">Account Details</h3>
 <table class="table details-table" id="accountDetailsTable">
     <thead>
         <tr>

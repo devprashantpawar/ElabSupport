@@ -1,0 +1,64 @@
+﻿
+/* General table styles */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.Support.Persons {
+    text-decoration: underline;
+    color: #3498db; /* Change color if needed */
+    font-size: 24px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+}
+
+/* Apply CSS styles for alignment and layout */
+/* Apply CSS styles for alignment and layout */
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.filter-form,
+.upload-form {
+    display: flex;
+    align-items: center;
+}
+
+.upload-section {
+    display: flex;
+    align-items: center;
+}
+
+    .upload-section .form-group {
+        margin-left: 10px;
+    }
+
+    .upload-section .btn {
+        margin-left: 10px;
+    }
+n-left: 10px;
+}
+
+

@@ -1,5 +1,5 @@
 ﻿@model List<ElabSupport.Models.UserAccountData>
-<button class="btn btn-primary" onclick="printTables()" style="position: relative; top: 11px; left: 69%; transform: translateX(-50%);">Print</button>
+
 
 @section scripts {
     <script>
@@ -20,7 +20,10 @@
         }
     </script>
 }
-<h3>Personal Details:</h3>
+<head>
+    <link href="~/CSS/ViewUserAccount.css" rel="stylesheet" />
+</head>
+<h3 class="Personal Details">Personal Details</h3>
 <table class="table summary-table">
     <thead>
         <tr>
@@ -48,7 +51,7 @@
     </tbody>
 </table>
 <br />
-<h3>Account Details:</h3>
+<h3 class="Account Detail">Account Detail</h3>
 <table class="table details-table">
     <thead>
         <tr>
@@ -78,4 +81,5 @@
         }
     </tbody>
 </table>
+<button class="btn btn-primary col-lg-1 col-lg-offset-2" onclick="printTables()" style="position: relative; top: 11px; left: 79%; transform: translateX(-50%);">Print</button>
 

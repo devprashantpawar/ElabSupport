@@ -288,8 +288,14 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\styles\dashboard.css" />
     <Content Include="Content\styles\style.css" />
+    <Content Include="CSS\AccountSummary.css" />
+    <Content Include="CSS\AddUser.css" />
+    <Content Include="CSS\Home.css" />
+    <Content Include="CSS\UserRole.css" />
+    <Content Include="CSS\ViewUserAccount.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Image\OUTOFOFFICELOGO.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\_run.js" />
     <Content Include="Scripts\app\app.datamodel.js" />

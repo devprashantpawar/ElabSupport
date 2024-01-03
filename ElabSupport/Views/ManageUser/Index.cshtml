@@ -14,47 +14,67 @@
         alert('@Html.Raw(errorMessage)');
     </script>
 }
+<head>
+    <!-- Other meta tags and scripts -->
+    <link href="~/CSS/UserRole.css" rel="stylesheet" />
+</head>
 
-<h2>User Roles</h2>
-<form method="post" action="@Url.Action("AddUserRole", "ManageUser")">
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <!-- Add User Role Textbox -->
-            <input type="hidden" id="userRoleIdInput" name="userRoleId" />
-            <input type="text" id="userRoleInput" name="userRole" class="form-control" placeholder="User Role">
-        </div>
-        <div class="col-md-4">
-            <!-- Add User Role Description Textbox -->
-            <input type="text" id="userRoleDescriptionInput" name="userRoleDescription" class="form-control" placeholder="User Role Description">
-        </div>
-        <div class="col-md-4">
-            <!-- Add Rates Textbox -->
-            <input type="text" id="ratesInput" name="rates" class="form-control" placeholder="Rates">
-        </div>
-    </div>
 
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <!-- Add Shift1 Textbox -->
-            <input type="text" id="shift1Input" name="shift1" class="form-control" placeholder="Shift1 Rates">
-        </div>
-        <div class="col-md-4">
-            <!-- Add Shiftboth Textbox -->
-            <input type="text" id="ShiftbothInput" name="shiftboth" class="form-control" placeholder="Shiftboth Rates">
-        </div>
-        <div class="col-md-4">
-            <!-- Buttons -->
-            <div class="row">
-                <div class="col-md-6">
-                 
-                    <button type="submit" id="btnAdd" class="btn btn-success">Add</button>
-                    <button type="submit" id="btnUpdate" class="btn btn-success" style="display: none;">Update</button>
-                    <button type="button" id="btnClear" class="btn btn-secondary">Clear</button>
+
+<div class="card">
+    <div class="card-body">
+        <h2>User Roles</h2>
+        <form method="post" action="@Url.Action("AddUserRole", "ManageUser")">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="userRoleInput">User Role</label>
+                        <input type="text" id="userRoleInput" name="userRole" class="form-control" placeholder="User Role">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="userRoleDescriptionInput">User Role Description</label>
+                        <input type="text" id="userRoleDescriptionInput" name="userRoleDescription" class="form-control" placeholder="User Role Description">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ratesInput">Rates</label>
+                        <input type="text" id="ratesInput" name="rates" class="form-control" placeholder="Rates">
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="shift1Input">Shift1 Rates</label>
+                        <input type="text" id="shift1Input" name="shift1" class="form-control" placeholder="Shift1 Rates">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="shiftbothInput">Shiftboth Rates</label>
+                        <input type="text" id="shiftbothInput" name="shiftboth" class="form-control" placeholder="Shiftboth Rates">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>&nbsp;</label><br>
+                                <button type="submit" id="btnAdd" class="btn btn-success">Add</button>
+                                <button type="submit" id="btnUpdate" class="btn btn-success" style="display: none;">Update</button>
+                                <button type="button" id="btnClear" class="btn btn-secondary">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 
 
 <table class="table">
