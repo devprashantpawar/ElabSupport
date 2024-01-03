@@ -278,7 +278,8 @@ namespace ElabSupport.Controllers
             List<AccountSupportData> filteredData = dc.GetAccountSupportData(fromDate, toDate);
             ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
             ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
-
+            TempData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
+            TempData["toDate"] = toDate.ToString("yyyy-MM-dd");
             // Pass the filtered data to the view
             return View("Account",filteredData);
         }
@@ -287,15 +288,18 @@ namespace ElabSupport.Controllers
             if (Session["UserID"] != null)
             {
                 UserDAC dc = new UserDAC();
-                DateTime currentDate = DateTime.Now;
-                DateTime fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-                DateTime toDate = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
-                ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
-                ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
+                if (TempData["fromDate"] != null && TempData["toDate"] != null)
+                {
+                    // Retrieve the date values from TempData
+                    DateTime fromDate = DateTime.Parse(TempData["fromDate"].ToString());
+                    DateTime toDate = DateTime.Parse(TempData["toDate"].ToString());
 
-                List<UserAccountData> UserAccountData = dc.GetUserAccountData(fromDate, toDate,id);
+                    List<UserAccountData> userAccountData = dc.GetUserAccountData(fromDate, toDate, id);
 
-                return View(UserAccountData);
+                    return View(userAccountData);
+                }
+
+                return View();
             }
             else
             {
