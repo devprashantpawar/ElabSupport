@@ -9,9 +9,9 @@ body {
 .pr-5 {
     padding-right: 5px;
 }
-.pl-0
-{
-    padding-left:0px;
+
+.pl-0 {
+    padding-left: 0px;
 }
 
 .mb-5 {
@@ -55,10 +55,10 @@ body {
     padding: 30px 25px 30px 25px;
 }
 
-.navbar-nav {
+/*.navbar-nav {
     flex-direction: column !important;
     justify-content: space-between;
-}
+}*/
 
 .nav-link img {
     margin-right: 10px;
@@ -79,10 +79,6 @@ body {
     border-left: 1px solid #f6f6f6
 }
 
-.navbar {
-    background-color: #fff !important;
-}
-
 .inputSearch {
     width: 264px;
     height: 42px;
@@ -93,11 +89,13 @@ body {
 .userSectionBasic {
     display: grid;
 }
+
 .PageLayout {
     display: flex;
     justify-content: center;
     overflow-y: hidden;
 }
+
 .user {
     color: #000;
     font-size: 15px;

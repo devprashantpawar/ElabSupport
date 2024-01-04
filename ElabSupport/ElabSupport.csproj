@@ -285,6 +285,7 @@
     <Content Include="Content\icons\sample.svg" />
     <Content Include="Content\icons\Vector.svg" />
     <Content Include="Content\images\elablogo.png" />
+    <Content Include="Content\images\oos.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\styles\dashboard.css" />
     <Content Include="Content\styles\style.css" />
