@@ -108,7 +108,7 @@
                 <td>@role.Days</td>
                 <td>@role.TotalAmount</td>
                 <td>
-                    @Html.ActionLink("View", "ViewUserAccount", new { id = role.OOSPerson }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("View", "ViewUserAccount", new { id = role.OOSPerson.ToString().Trim() }, new { @class = "btn btn-primary btn-sm" })
                 </td>
             </tr>
         }
