@@ -301,11 +301,11 @@ namespace ElabSupport.Controllers
                     return View(userAccountData);
                 }
 
-                return View();
+                return RedirectToAction("Account");
             }
             else
             {
-                return View();
+                return RedirectToAction("Login", "Account");
             }
         }
 

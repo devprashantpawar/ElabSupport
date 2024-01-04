@@ -29,6 +29,7 @@
         <tr>
         </tr>
     </thead>
+    @if (Model != null) { 
     <tbody>
         <tr>
             <td>Name:</td>
@@ -49,6 +50,7 @@
             <td>@Model.Sum(u => Convert.ToDouble(u.Amount))</td>
         </tr>
     </tbody>
+    }
 </table>
 <br />
 <h3 class="Account Detail">Account Detail</h3>
