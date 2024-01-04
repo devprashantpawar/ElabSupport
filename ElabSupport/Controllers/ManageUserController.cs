@@ -255,6 +255,8 @@ namespace ElabSupport.Controllers
                 DateTime toDate = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
                 ViewData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
                 ViewData["toDate"] = toDate.ToString("yyyy-MM-dd");
+                TempData["fromDate"] = fromDate.ToString("yyyy-MM-dd");
+                TempData["toDate"] = toDate.ToString("yyyy-MM-dd");
                 string UserId = null;
                 if(Session["UserRoleId"]!=null && (Session["UserRoleId"].ToString() != "1" && Session["UserRoleId"].ToString() != "3" && Session["UserRoleId"].ToString() != "1008") ) {
                     UserId = Session["UserID"].ToString();
