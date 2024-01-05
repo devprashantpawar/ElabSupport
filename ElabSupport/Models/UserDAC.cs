@@ -539,6 +539,42 @@ namespace ElabSupport.Models
 
             return deactivated;
         }
+        public List<ActiveLogs> GetActiveLog()
+        {
+            List<ActiveLogs> result = new List<ActiveLogs>();
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("GetUserActivity", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    //command.Parameters.AddWithValue("@UserID", UserId);
+                    //command.Parameters.AddWithValue("@fromDate", fromDate);
+                    //command.Parameters.AddWithValue("@toDate", toDate);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ActiveLogs activelogs = new ActiveLogs
+                            {
+                                UserId = reader["Userid"] != DBNull.Value ? reader["Userid"].ToString() : null,
+                                Datetime = reader["Datetime"] != DBNull.Value ? reader["Datetime"].ToString() : null,
+                                Flag = reader["Flag"] != DBNull.Value ? Convert.ToBoolean (reader["Flag"]) : false,
+                                UserName = reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : null,
+                                UserRole = reader["UserRole"] != DBNull.Value ? reader["UserRole"].ToString() : null,
+
+                            };
+
+                            result.Add(activelogs);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

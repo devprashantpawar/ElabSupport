@@ -29,7 +29,7 @@ namespace ElabSupport.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
+        #region
         public ApplicationSignInManager SignInManager
         {
             get
@@ -513,5 +513,14 @@ namespace ElabSupport.Controllers
             }
         }
         #endregion
+        #endregion
+        public ActionResult GetActiveLog()
+        {
+            UserDAC dc = new UserDAC();
+
+            System.Collections.Generic.List<ActiveLogs> logdata = dc.GetActiveLog();
+           
+            return View("GetActiveLog", logdata);
+        }
     }
 }

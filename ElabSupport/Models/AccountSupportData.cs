@@ -21,4 +21,13 @@ namespace ElabSupport.Models
         public string Amount { get; set; }
         public string MobileNumber { get; set; }
     }
+    public class ActiveLogs
+    {
+        public string UserId { get; set; }
+        public string Datetime { get; set; }
+        public bool Flag { get; set; }
+        public string UserName { get; set; }
+        public string UserRole { get; set; }
+        
+    }
 }

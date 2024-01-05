@@ -382,6 +382,7 @@
     <Content Include="Views\ManageUser\_ViewUser.cshtml" />
     <Content Include="Views\ManageUser\ViewUserAccount.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Account\GetActiveLog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

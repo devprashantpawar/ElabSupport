@@ -1,0 +1,46 @@
+﻿
+@model List<ElabSupport.Models.ActiveLogs>
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <!-- Other meta tags and scripts -->
+    <link href="~/CSS/AccountSummary.css" rel="stylesheet" />
+</head>
+
+<h3 class="account-Details"> Active Logs</h3>
+<table class="table details-table" id="accountDetailsTable">
+    <thead>
+        <tr>
+            <th>UserId</th>
+            <th>UserName</th>
+            <th>UserRole</th>
+            <th>Datetime</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+        <tr>
+            <td>@log.UserId</td>
+            <td>@log.UserName</td>
+            <td>@log.UserRole</td>
+
+            <td>@log.Datetime</td>
+            @if (log.Flag == true)
+            {
+                <td>Active</td>
+            }
+            else
+            {
+                <td>Deactive</td>
+            }
+
+
+        </tr>
+        }
+    </tbody>
+</table>

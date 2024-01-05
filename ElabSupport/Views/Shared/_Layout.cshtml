@@ -59,7 +59,7 @@
                         @if (Session["UserRoleId"] as string == "1" || Session["UserRoleId"] as string == "3" || Session["UserRoleId"] as string == "1008")
                         {
 
-                            <li>@Html.ActionLink("UserData", "Index", "Home", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("ActiveLogs", "GetActiveLog", "Account", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("ManageUser", "AddUser", "ManageUser", new { area = "" }, null)</li>
                             <li>@Html.ActionLink("ManageRole", "Index", "ManageUser", new { area = "" }, null)</li>
                         }
